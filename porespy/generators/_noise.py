@@ -15,7 +15,7 @@ def fractal_noise(shape, frequency=0.05, octaves=4, gain=0.5, mode='simplex',
         The size of the image to generate, can be 2D or 3D.
     frequency : scalar, default=0.05
         Controls the overall scale of the generated noise, with larger
-        values giving larger structures.
+        values giving smaller structures.
     octaves : int, default=4
         Controls the number of scales across which structures are
         generated, with larger values giving more scale.
@@ -71,6 +71,12 @@ def fractal_noise(shape, frequency=0.05, octaves=4, gain=0.5, mode='simplex',
 
     For more information on ``cubic noise`` see
     `here <https://github.com/jobtalle/CubicNoise>`__.
+
+    Examples
+    --------
+    `Click here
+    <https://porespy.org/examples/generators/reference/fractal_noise.html>`_
+    to view online example.
 
     """
     try:

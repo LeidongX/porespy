@@ -1,7 +1,15 @@
 import numpy as np
 import scipy.ndimage as spim
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 # from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+
+
+__all__ = [
+    'show_3D',
+    'show_planes',
+    'sem',
+    'xray',
+]
 
 
 def show_3D(im):  # pragma: no cover
@@ -19,7 +27,7 @@ def show_3D(im):  # pragma: no cover
     Returns
     -------
     image : ndarray
-        A 2D veiw of the given 3D image
+        A 2D view of the given 3D image
 
     Notes
     -----
@@ -27,6 +35,12 @@ def show_3D(im):  # pragma: no cover
     minutes to render very large images.  It uses ``scipy.ndimage.rotate``
     with no interpolation to view the 3D image from an angle, then casts the
     result into a 2D projection.
+
+    Examples
+    --------
+    `Click here
+    <https://porespy.org/examples/visualization/reference/show_3D.html>`_
+    to view online example.
 
     """
     im = ~np.copy(im)
@@ -61,6 +75,12 @@ def show_planes(im, spacing=10):  # pragma: no cover
         A 2D array containing the views.  This single image can be viewed using
         ``matplotlib.pyplot.imshow``.
 
+    Examples
+    --------
+    `Click here
+    <https://porespy.org/examples/visualization/reference/show_planes.html>`_
+    to view online example.
+
     """
     s = spacing
     if np.squeeze(im.ndim) < 3:
@@ -92,7 +112,7 @@ def show_planes(im, spacing=10):  # pragma: no cover
 
 def sem(im, axis=0):  # pragma: no cover
     r"""
-    Simulates an SEM photograph looking into the porous material.
+    Simulates an SEM image looking into the porous material.
 
     Features are colored according to their depth into the image, so
     darker features are further away.
@@ -110,6 +130,12 @@ def sem(im, axis=0):  # pragma: no cover
     image : ndarray
         A 2D greyscale image suitable for use in matplotlib's ``imshow``
         function.
+
+    Examples
+    --------
+    `Click here
+    <https://porespy.org/examples/visualization/reference/sem.html>`_
+    to view online example.
 
     """
     im = np.array(~im, dtype=int)
@@ -145,6 +171,12 @@ def xray(im, axis=0):  # pragma: no cover
     image : ndarray
         A 2D greyscale image suitable for use in matplotlib\'s ```imshow```
         function.
+
+    Examples
+    --------
+    `Click here
+    <https://porespy.org/examples/visualization/reference/sem.html>`_
+    to view online example.
     """
     im = np.array(~im, dtype=int)
     if axis == 1:

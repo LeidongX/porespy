@@ -1,0 +1,16 @@
+codecov
+coverage
+jupyter
+nbval
+pytest
+pytest-cache
+pytest-cov
+pytest-custom-exit-code
+pytest-pycodestyle
+pytest-split
+pyfastnoisesimd
+scikit-fmm
+trimesh
+pyevtk
+imageio
+numpy-stl

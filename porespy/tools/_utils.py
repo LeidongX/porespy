@@ -1,11 +1,14 @@
-import os
+import logging
 import sys
 import numpy as np
 import importlib
 from dataclasses import dataclass
-from loguru import logger
-from tqdm import tqdm
 import psutil
+import inspect
+import time
+
+
+logger = logging.getLogger("porespy")
 
 
 __all__ = [
@@ -26,30 +29,6 @@ def _is_ipython_notebook():  # pragma: no cover
         return False        # Other type (?)
     except NameError:
         return False        # Probably standard Python interpreter
-
-
-def config_logger(fmt, loglevel):  # pragma: no cover
-    r"""
-    Configures loguru logger with the given format and log level.
-
-    Parameters
-    ----------
-    fmt : str
-        loguru-compatible format used to format logger messages.
-    loglevel : str
-        Determines what messages to get printed in console. Options are:
-        "TRACE", "DEBUG", "INFO", "SUCCESS", "WARNING", "ERROR", "CRITICAL"
-
-    Returns
-    -------
-    None.
-
-    """
-    logger.remove()
-    logger.add(lambda msg: tqdm.write(msg, end=""),
-               level=loglevel,
-               format=fmt,
-               colorize=True)
 
 
 @dataclass
@@ -76,8 +55,6 @@ class Settings:  # pragma: no cover
         ``True`` will silence the progress bars.  It's also possible to
         adjust the formatting such as ``'colour'`` and ``'ncols'``, which
         controls width.
-    logger_fmt : str
-        luguru-compatible format used to format the logger messages.
     loglevel : str, or int
         Determines what messages to get printed in console. Options are:
         "TRACE" (5), "DEBUG" (10), "INFO" (20), "SUCCESS" (25), "WARNING" (30),
@@ -91,45 +68,32 @@ class Settings:  # pragma: no cover
             'ncols': None,
             'leave': False,
             'file': sys.stdout}
-    _logger_fmt = '<green>{time:YYYY-MM-DD HH:mm:ss}</green> | ' \
-          '<level>{level: <8}</level> | ' \
-          '<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan>' \
-          '\n--> <level>{message}</level>'
-    _loglevel = "ERROR" if _is_ipython_notebook() else "WARNING"
-    config_logger(_logger_fmt, _loglevel)
+    _loglevel = 40 if _is_ipython_notebook() else 30
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._notebook = None
-        self._ncores = psutil.cpu_count()
-
-    @property
-    def logger_fmt(self):
-        return self._logger_fmt
+        self._ncores = psutil.cpu_count(logical=False)
 
     @property
     def loglevel(self):
         return self._loglevel
 
-    @logger_fmt.setter
-    def logger_fmt(self, value):
-        self._logger_fmt = value
-        config_logger(fmt=value, loglevel=self.loglevel)
-
     @loglevel.setter
     def loglevel(self, value):
-        if isinstance(value, int):
-            options = {5: "TRACE",
-                       10: "DEBUG",
-                       20: "INFO",
-                       25: "SUCESS",
-                       30: "WARNING",
-                       40: "ERROR",
-                       50: "CRITICAL"}
+        if isinstance(value, str):
+            options = {
+                "TRACE" : 5,
+                "DEBUG" : 10,
+                "INFO" : 20,
+                "SUCESS" : 25,
+                "WARNING" : 30,
+                "ERROR" : 40,
+                "CRITICAL" : 50
+            }
             value = options[value]
         self._loglevel = value
-        os.environ["LOGURU_LEVEL"] = value
-        config_logger(fmt=self.logger_fmt, loglevel=value)
+        logger.setLevel(value)
 
     def __new__(cls):
         if Settings.__instance__ is None:
@@ -154,15 +118,16 @@ class Settings:  # pragma: no cover
 
     def _get_ncores(self):
         if self._ncores is None:
-            self._ncores = psutil.cpu_count()
+            self._ncores = psutil.cpu_count(logical=False)
         return self._ncores
 
     def _set_ncores(self, val):
+        cpu_count = psutil.cpu_count(logical=False)
         if val is None:
-            val = psutil.cpu_count()
-        elif val > psutil.cpu_count():
+            val = cpu_count
+        elif val > cpu_count:
             logger.error('Value is more than the available number of cores')
-            val = psutil.cpu_count()
+            val = cpu_count
         self._ncores = val
 
     ncores = property(fget=_get_ncores, fset=_set_ncores)
@@ -265,12 +230,15 @@ class Results:
     and generic class-like object assignment (``obj.im = im``)
 
     """
-    _value = "Description"
-    _key = "Item"
+
+    def __init__(self, **kwargs):
+        self._func = inspect.getouterframes(inspect.currentframe())[1].function
+        self._time = time.asctime()
 
     def __iter__(self):
-        for item in self.__dict__.values():
-            yield item
+        for k, v in self.__dict__.items():
+            if not k.startswith('_'):
+                yield v
 
     def __getitem__(self, key):
         return getattr(self, key)
@@ -280,16 +248,20 @@ class Results:
 
     def __str__(self):
         header = "―" * 78
-        lines = [header, "{0:<25s} {1}".format(self._key, self._value), header]
+        lines = [
+            header,
+            f"Results of {self._func} generated at {self._time}",
+            header,
+        ]
         for item in list(self.__dict__.keys()):
             if item.startswith('_'):
                 continue
             if (isinstance(self[item], np.ndarray)):
                 s = np.shape(self[item])
-                if (self[item].ndim > 1):
-                    lines.append("{0:<25s} Image of size {1}".format(item, s))
-                else:
-                    lines.append("{0:<25s} Array of size {1}".format(item, s))
+                lines.append("{0:<25s} Array of size {1}".format(item, s))
+            elif hasattr(self[item], 'keys'):
+                N = len(self[item].keys())
+                lines.append("{0:<25s} Dictionary with {1} items".format(item, N))
             else:
                 lines.append("{0:<25s} {1}".format(item, self[item]))
         lines.append(header)

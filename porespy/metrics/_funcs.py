@@ -1,7 +1,8 @@
+import logging
 import numpy as np
 import scipy.ndimage as spim
 import scipy.spatial as sptl
-from scipy import fftpack as sp_ft
+from scipy import fft as sp_ft
 from skimage.measure import regionprops
 from deprecated import deprecated
 from porespy.tools import extend_slice
@@ -9,8 +10,102 @@ from porespy.tools import _check_for_singleton_axes
 from porespy.tools import Results
 from porespy import settings
 from porespy.tools import get_tqdm
-from loguru import logger
+from numba import njit
+
+
+__all__ = [
+    "boxcount",
+    "chord_counts",
+    "chord_length_distribution",
+    "find_h",
+    "lineal_path_distribution",
+    "pore_size_distribution",
+    "radial_density_distribution",
+    "porosity",
+    "porosity_profile",
+    "representative_elementary_volume",
+    "satn_profile",
+    "two_point_correlation",
+    "phase_fraction",
+    "pc_curve",
+    "pc_curve_from_ibip",
+    "pc_curve_from_mio",
+]
+
+
 tqdm = get_tqdm()
+logger = logging.getLogger(__name__)
+
+
+def boxcount(im, bins=10):
+    r"""
+    Calculates fractal dimension of an image using the tiled box counting
+    method [1]_
+
+    Parameters
+    ----------
+    im : ndarray
+        The image of the porous material.
+    bins : int or array_like, optional
+        The number of box sizes to use. The default is 10 sizes
+        logarithmically spaced between 1 and ``min(im.shape)``.
+        If an array is provided, this is used directly.
+
+    Returns
+    -------
+    results
+        An object possessing the following attributes:
+
+        size : ndarray
+            The box sizes used
+        count : ndarray
+            The number of boxes of each size that contain both solid and void
+        slope : ndarray
+            The gradient of ``count``. This has the same number of elements as
+            ``count`` and
+
+    References
+    ----------
+    .. [1] See Boxcounting on `Wikipedia <https://en.wikipedia.org/wiki/Box_counting>`_
+
+    Examples
+    --------
+    `Click here
+    <https://porespy.org/examples/metrics/reference/box_counting.html>`_
+    to view online example.
+
+    """
+    im = np.array(im, dtype=bool)
+
+    if (len(im.shape) != 2 and len(im.shape) != 3):
+        raise Exception('Image must be 2-dimensional or 3-dimensional')
+
+    if isinstance(bins, int):
+        Ds = np.unique(np.logspace(1, np.log10(min(im.shape)), bins).astype(int))
+    else:
+        Ds = np.array(bins).astype(int)
+
+    N = []
+    for d in tqdm(Ds, **settings.tqdm):
+        result = 0
+        for i in range(0, im.shape[0], d):
+            for j in range(0, im.shape[1], d):
+                if len(im.shape) == 2:
+                    temp = im[i:i+d, j:j+d]
+                    result += np.any(temp)
+                    result -= np.all(temp)
+                else:
+                    for k in range(0, im.shape[2], d):
+                        temp = im[i:i+d, j:j+d, k:k+d]
+                        result += np.any(temp)
+                        result -= np.all(temp)
+        N.append(result)
+    slope = -1*np.gradient(np.log(np.array(N)), np.log(Ds))
+    data = Results()
+    data.size = Ds
+    data.count = N
+    data.slope = slope
+    return data
 
 
 def representative_elementary_volume(im, npoints=1000):
@@ -52,8 +147,8 @@ def representative_elementary_volume(im, npoints=1000):
     References
     ----------
     .. [1] Bachmat and Bear. On the Concept and Size of a Representative
-    Elementary Volume (Rev), Advances in Transport Phenomena in Porous Media
-    (1987)
+       Elementary Volume (Rev), Advances in Transport Phenomena in Porous Media
+       (1987)
 
     Examples
     --------
@@ -601,7 +696,7 @@ def two_point_correlation_bf(im, spacing=10):
     return tpcf
 
 
-def _radial_profile(autocorr, r_max, nbins=100):
+def _radial_profile(autocorr, bins, pf=None, voxel_size=1):
     r"""
     Helper functions to calculate the radial profile of the autocorrelation
 
@@ -614,40 +709,72 @@ def _radial_profile(autocorr, r_max, nbins=100):
         The image of autocorrelation produced by FFT
     r_max : int or float
         The maximum radius in pixels to sum the image over
+    bins : ndarray
+        The edges of the bins to use in summing the radii, ** must be in voxels
+    pf : float
+        the phase fraction (porosity) of the image, used for scaling the
+        normalized autocorrelation down to match the two-point correlation
+        definition as given by Torquato
+    voxel_size : scalar
+        The size of a voxel side in preferred units.  The default is 1, so the
+        user can apply the scaling to the returned results after the fact.
 
     Returns
     -------
-    result : named_tuple
-        A named tupling containing an array of ``bins`` of radial position
-        and an array of ``counts`` in each bin.
+    result : tpcf
+
 
     """
     if len(autocorr.shape) == 2:
         adj = np.reshape(autocorr.shape, [2, 1, 1])
-        inds = np.indices(autocorr.shape) - adj / 2
+        # use np.round otherwise with odd image sizes, the mask generated can
+        # be zero, resulting in Div/0 error
+        inds = np.indices(autocorr.shape) - np.round(adj / 2)
         dt = np.sqrt(inds[0]**2 + inds[1]**2)
     elif len(autocorr.shape) == 3:
         adj = np.reshape(autocorr.shape, [3, 1, 1, 1])
-        inds = np.indices(autocorr.shape) - adj / 2
+        # use np.round otherwise with odd image sizes, the mask generated can
+        # be zero, resulting in Div/0 error
+        inds = np.indices(autocorr.shape) - np.round(adj / 2)
         dt = np.sqrt(inds[0]**2 + inds[1]**2 + inds[2]**2)
     else:
         raise Exception('Image dimensions must be 2 or 3')
-    bin_size = np.int(np.ceil(r_max / nbins))
-    bins = np.arange(bin_size, r_max, step=bin_size)
-    radial_sum = np.zeros_like(bins)
-    for i, r in enumerate(bins):
-        # Generate Radial Mask from dt using bins
-        mask = (dt <= r) * (dt > (r - bin_size))
-        radial_sum[i] = np.sum(autocorr[mask]) / np.sum(mask)
+    if np.max(bins) > np.max(dt):
+        msg = (
+            'Bins specified distances exceeding maximum radial distance for'
+            ' image size. Radial distance cannot exceed distance from center'
+            ' of image to corner.'
+        )
+        raise Exception(msg)
+
+    bin_size = bins[1:] - bins[:-1]
+    radial_sum = _get_radial_sum(dt, bins, bin_size, autocorr)
     # Return normalized bin and radially summed autoc
     norm_autoc_radial = radial_sum / np.max(autocorr)
+    h = [norm_autoc_radial, bins]
+    h = _parse_histogram(h, voxel_size=1)
     tpcf = Results()
-    tpcf.distance = bins
+    tpcf.distance = h.bin_centers * voxel_size
+    tpcf.bin_centers = h.bin_centers * voxel_size
+    tpcf.bin_edges = h.bin_edges * voxel_size
+    tpcf.bin_widths = h.bin_widths * voxel_size
     tpcf.probability = norm_autoc_radial
+    tpcf.probability_scaled = norm_autoc_radial * pf
+    tpcf.pdf = h.pdf * pf
+    tpcf.relfreq = h.relfreq
     return tpcf
 
 
-def two_point_correlation(im):
+@njit(parallel=True)
+def _get_radial_sum(dt, bins, bin_size, autocorr):
+    radial_sum = np.zeros_like(bins[:-1])
+    for i, r in enumerate(bins[:-1]):
+        mask = (dt <= r) * (dt > (r - bin_size[i]))
+        radial_sum[i] = np.sum(np.ravel(autocorr)[np.ravel(mask)]) / np.sum(mask)
+    return radial_sum
+
+
+def two_point_correlation(im, voxel_size=1, bins=100):
     r"""
     Calculate the two-point correlation function using Fourier transforms
 
@@ -655,19 +782,38 @@ def two_point_correlation(im):
     ----------
     im : ndarray
         The image of the void space on which the 2-point correlation is
-        desired.
+        desired, in which the phase of interest is labelled as True
+    voxel_size : scalar
+        The size of a voxel side in preferred units.  The default is 1, so
+        the user can apply the scaling to the returned results after the
+        fact.
+    bins : scalar or array_like
+        Either an array of bin sizes to use, or the number of bins that
+        should be automatically generated that span the data range. The
+        maximum value of the bins, if passed as an array, cannot exceed
+        the distance from the center of the image to the corner.
 
     Returns
     -------
-    result : Results object
-        A custom object with the following data added as named attributes:
+    result : tpcf
+        The two-point correlation function object, with named attributes:
 
-        'distance'
-            The distance between two points.
-
-        'probability'
+        *distance*
+            The distance between two points, equivalent to bin_centers
+        *bin_centers*
+            The center point of each bin. See distance
+        *bin_edges*
+            Locations of bin divisions, including 1 more value than
+            the number of bins
+        *bin_widths*
+            Useful for passing to the ``width`` argument of
+            ``matplotlib.pyplot.bar``
+        *probability_normalized*
             The probability that two points of the stated separation distance
-            are within the same phase
+            are within the same phase normalized to 1 at r = 0
+        *probability* or *pdf*
+            The probability that two points of the stated separation distance
+            are within the same phase scaled to the phase fraction at r = 0
 
     Notes
     -----
@@ -675,7 +821,7 @@ def two_point_correlation(im):
     autocorrelation function is the inverse FT of the power spectrum
     density. For background read the Scipy fftpack docs and for a good
     explanation `see this thesis
-    <https://www.ucl.ac.uk/~ucapikr/projects/KamilaSuankulova_BSc_Project.pdf>`_
+    <https://www.ucl.ac.uk/~ucapikr/projects/KamilaSuankulova_BSc_Project.pdf>`_.
 
     Examples
     --------
@@ -684,26 +830,44 @@ def two_point_correlation(im):
     to view online example.
 
     """
-    # Calculate half lengths of the image
-    hls = (np.ceil(np.shape(im)) / 2).astype(int)
-    # Fourier Transform and shift image
-    F = sp_ft.ifftshift(sp_ft.fftn(sp_ft.fftshift(im)))
-    # Compute Power Spectrum
-    P = np.absolute(F**2)
-    # Auto-correlation is inverse of Power Spectrum
-    autoc = np.absolute(sp_ft.ifftshift(sp_ft.ifftn(sp_ft.fftshift(P))))
-    tpcf = _radial_profile(autoc, r_max=np.min(hls))
+    # Get the number of CPUs available to parallel process Fourier transforms
+    cpus = settings.ncores
+    # Get the phase fraction of the image
+    pf = porosity(im)
+    if isinstance(bins, int):
+        # Calculate half lengths of the image
+        r_max = (np.ceil(np.min(np.shape(im))) / 2).astype(int)
+        # Get the bin-size - ensures it will be at least 1
+        bin_size = int(np.ceil(r_max / bins))
+        # Calculate the bin divisions, equivalent to bin_edges
+        bins = np.arange(0, r_max + bin_size, bin_size)
+    # set the number of parallel processors to use:
+    with sp_ft.set_workers(cpus):
+        # Fourier Transform and shift image
+        F = sp_ft.ifftshift(sp_ft.rfftn(sp_ft.fftshift(im)))
+        # Compute Power Spectrum
+        P = np.absolute(F**2)
+        # Auto-correlation is inverse of Power Spectrum
+        autoc = np.absolute(sp_ft.ifftshift(sp_ft.irfftn(sp_ft.fftshift(P))))
+    tpcf = _radial_profile(autoc, bins, pf=pf, voxel_size=voxel_size)
     return tpcf
 
 
-def _parse_histogram(h, voxel_size=1):
+def _parse_histogram(h, voxel_size=1, density=True):
     delta_x = h[1]
     P = h[0]
-    temp = P * (delta_x[1:] - delta_x[:-1])
+    bin_widths = delta_x[1:] - delta_x[:-1]
+    temp = P * (bin_widths)
     C = np.cumsum(temp[-1::-1])[-1::-1]
-    S = P * (delta_x[1:] - delta_x[:-1])
+    S = P * (bin_widths)
+    if not density:
+        P /= np.max(P)
+        temp_sum = np.sum(P * bin_widths)
+        C /= temp_sum
+        S /= temp_sum
+
     bin_edges = delta_x * voxel_size
-    bin_widths = (delta_x[1:] - delta_x[:-1]) * voxel_size
+    bin_widths = (bin_widths) * voxel_size
     bin_centers = ((delta_x[1:] + delta_x[:-1]) / 2) * voxel_size
     hist = Results()
     hist.pdf = P
@@ -745,7 +909,7 @@ def chord_counts(im):
     """
     labels, N = spim.label(im > 0)
     props = regionprops(labels)
-    chord_lens = np.array([i.filled_area for i in props])
+    chord_lens = np.array([i.filled_area for i in props], dtype=int)
     return chord_lens
 
 

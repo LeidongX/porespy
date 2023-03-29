@@ -1,10 +1,23 @@
-import multiprocessing
 import numpy as np
 from porespy.tools import norm_to_uniform
+import psutil
 
 
-def fractal_noise(shape, frequency=0.05, octaves=4, gain=0.5, mode='simplex',
-                  seed=None, cores=None, uniform=True):
+__all__ = [
+    'fractal_noise',
+]
+
+
+def fractal_noise(
+    shape,
+    frequency=0.05,
+    octaves=4,
+    gain=0.5,
+    mode='simplex',
+    seed=None,
+    cores=None,
+    uniform=True,
+):
     r"""
     Generate fractal noise which can be thresholded to create binary
     images with realistic structures across scales.
@@ -25,17 +38,21 @@ def fractal_noise(shape, frequency=0.05, octaves=4, gain=0.5, mode='simplex',
     mode : string
         The type of noise to generate. Options are:
 
-        - 'perlin'
-            classic Perlin noise
-
-        - 'simplex'
-            updated Perlin noise for more realistic textures
-
-        - 'value'
-            bilnear interpolation of white noise
-
-        - 'cubic'
-            cubic interpolation of white noise
+        ========== ==================================================================
+        mode       description
+        ========== ==================================================================
+        'perlin'   Classic Perlin noise. For more information on ``perlin noise`` see
+                   `here <https://en.wikipedia.org/wiki/Perlin_noise>`__.
+        'simplex'  Updated Perlin noise for more realistic textures. For more
+                   information on ``simplex noise`` see
+                   `here <https://en.wikipedia.org/wiki/Simplex_noise>`__.
+        'value'    Bilnear interpolation of white noise. For more information on
+                   ``value noise`` see
+                   `here <https://en.wikipedia.org/wiki/Value_noise>`__.
+        'cubic'    Cubic interpolation of white noise. For more information on
+                   ``cubic noise`` see
+                   `here <https://github.com/jobtalle/CubicNoise>`__.
+        ========== ==================================================================
 
     seed : int, optional
         The seed of the random number generator.  Using the same
@@ -60,18 +77,6 @@ def fractal_noise(shape, frequency=0.05, octaves=4, gain=0.5, mode='simplex',
     packages, explore the `pyfastnoisesimd documentation
     <https://pyfastnoisesimd.readthedocs.io/en/latest/overview.html>`_.
 
-    For more information on ``simplex noise`` see
-    `here <https://en.wikipedia.org/wiki/Simplex_noise>`__.
-
-    For more information on ``perlin noise`` see
-    `here <https://en.wikipedia.org/wiki/Perlin_noise>`__.
-
-    For more information on ``value noise`` see
-    `here <https://en.wikipedia.org/wiki/Value_noise>`__.
-
-    For more information on ``cubic noise`` see
-    `here <https://github.com/jobtalle/CubicNoise>`__.
-
     Examples
     --------
     `Click here
@@ -85,7 +90,7 @@ def fractal_noise(shape, frequency=0.05, octaves=4, gain=0.5, mode='simplex',
         raise ModuleNotFoundError("You need to install `pyfastnoisesimd` using"
                                   " `pip install pyfastnoisesimd`")
     if cores is None:
-        cores = multiprocessing.cpu_count()
+        cores = psutil.cpu_count(logical=False)
     if seed is None:
         seed = np.random.randint(2**31)
     perlin = Noise(numWorkers=cores)

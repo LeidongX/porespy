@@ -22,7 +22,10 @@ def get_version(rel_path):
     for line in read(rel_path).splitlines():
         if line.startswith('__version__'):
             delim = '"' if '"' in line else "'"
-            return line.split(delim)[1].strip(".dev0")
+            ver = line.split(delim)[1].split(".")
+            if "dev0" in ver:
+                ver.remove("dev0")
+            return ".".join(ver)
     else:
         raise RuntimeError("Unable to find version string.")
 
@@ -48,6 +51,7 @@ setup(
         'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'Topic :: Scientific/Engineering',
         'Topic :: Scientific/Engineering :: Physics'
     ],
@@ -68,22 +72,16 @@ setup(
         'dask',
         'deprecated',
         'edt',
-        'imageio',
-        'loguru',
         'matplotlib',
         'numba',
         'numpy',
-        'numpy-stl',
         'openpnm',
         'pandas',
         'psutil',
-        'pyevtk',
-        'pyfastnoisesimd',
-        'scikit-fmm',
+        'rich',
         'scikit-image',
         'scipy',
         'tqdm',
-        'trimesh',
     ],
     author='PoreSpy Team',
     author_email='jgostick@gmail.com',

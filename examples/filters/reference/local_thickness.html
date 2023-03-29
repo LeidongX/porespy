@@ -1,0 +1,3041 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>local_thickness &#8212; PoreSpy  documentation</title>
+<script>
+  document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
+</script>
+
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+
+
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
+
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script type="application/vnd.jupyter.widget-state+json">{"state": {"03c46cc611b7482fb276a0dc257d1448": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "20154df7046f46f198d306605ed31f0e": {"model_name": "ProgressStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "bar_color": null, "description_width": ""}}, "0ffad624279c494d805aa94ede8c324f": {"model_name": "FloatProgressModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "ProgressView", "bar_style": "", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_03c46cc611b7482fb276a0dc257d1448", "max": 25.0, "min": 0.0, "orientation": "horizontal", "style": "IPY_MODEL_20154df7046f46f198d306605ed31f0e", "tabbable": null, "tooltip": null, "value": 25.0}}, "f68e1607a73f4a6bbd89c38fc561e856": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "6c09c5d0a46742ba8bee8c26cf7b8ef2": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "7c85815a35084d79a9d4d7923135f167": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_f68e1607a73f4a6bbd89c38fc561e856", "placeholder": "\u200b", "style": "IPY_MODEL_6c09c5d0a46742ba8bee8c26cf7b8ef2", "tabbable": null, "tooltip": null, "value": "  0%"}}, "6169eb1b9edc4df697ad7a09ff85ca03": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "6a87a28f53214a4d8bf6e11556f734d8": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "d58eec92c2874b8c9eeca497a81a256c": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_6169eb1b9edc4df697ad7a09ff85ca03", "placeholder": "\u200b", "style": "IPY_MODEL_6a87a28f53214a4d8bf6e11556f734d8", "tabbable": null, "tooltip": null, "value": " 0/25 [00:00&lt;?, ?it/s]"}}, "0c999a9230654d68a6d27d9c8474b95d": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": "hidden", "width": null}}, "21de879d6bab47058934f901b066bc17": {"model_name": "HBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_7c85815a35084d79a9d4d7923135f167", "IPY_MODEL_0ffad624279c494d805aa94ede8c324f", "IPY_MODEL_d58eec92c2874b8c9eeca497a81a256c"], "layout": "IPY_MODEL_0c999a9230654d68a6d27d9c8474b95d", "tabbable": null, "tooltip": null}}, "1deae0f4545546238b3ac3cb2f6dfbba": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "2863a973b8d9413a84e9bee783bfbd63": {"model_name": "ProgressStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "bar_color": null, "description_width": ""}}, "5f65c49e68f94864a7400aafc5f090af": {"model_name": "FloatProgressModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "ProgressView", "bar_style": "", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_1deae0f4545546238b3ac3cb2f6dfbba", "max": 5.0, "min": 0.0, "orientation": "horizontal", "style": "IPY_MODEL_2863a973b8d9413a84e9bee783bfbd63", "tabbable": null, "tooltip": null, "value": 5.0}}, "fa98e23d02fd4674b959fb870a532cc0": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "9394ffa269e44775a0ca9fcd6fe087e8": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "a8c519b8cd414f3c8f862731a13d9932": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_fa98e23d02fd4674b959fb870a532cc0", "placeholder": "\u200b", "style": "IPY_MODEL_9394ffa269e44775a0ca9fcd6fe087e8", "tabbable": null, "tooltip": null, "value": "  0%"}}, "1f2251bcfe174694be0904582451e92a": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "01db61aa388f458dac98ec948100bc6c": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "c4f4589f661a43daa9fd9f59d5e386c6": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_1f2251bcfe174694be0904582451e92a", "placeholder": "\u200b", "style": "IPY_MODEL_01db61aa388f458dac98ec948100bc6c", "tabbable": null, "tooltip": null, "value": " 0/5 [00:00&lt;?, ?it/s]"}}, "1669c7f3d6d744af94ae467e132e7b0d": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": "hidden", "width": null}}, "bdfc692d47fa4661813991155f36ff93": {"model_name": "HBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_a8c519b8cd414f3c8f862731a13d9932", "IPY_MODEL_5f65c49e68f94864a7400aafc5f090af", "IPY_MODEL_c4f4589f661a43daa9fd9f59d5e386c6"], "layout": "IPY_MODEL_1669c7f3d6d744af94ae467e132e7b0d", "tabbable": null, "tooltip": null}}, "75cd9149874c408da8f3c4ff940c95b8": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "f63e52ae5afd4a5db530fd6e73ef79d8": {"model_name": "ProgressStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "bar_color": null, "description_width": ""}}, "1913318c72f84c0794ee044bf4a11fc0": {"model_name": "FloatProgressModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "ProgressView", "bar_style": "", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_75cd9149874c408da8f3c4ff940c95b8", "max": 25.0, "min": 0.0, "orientation": "horizontal", "style": "IPY_MODEL_f63e52ae5afd4a5db530fd6e73ef79d8", "tabbable": null, "tooltip": null, "value": 25.0}}, "353342997b9f4e998551e13fc93ce3f9": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "02dfa88d6c0445fc94633149259828be": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "a1036dcff7ac453a962576c8d3644f6c": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_353342997b9f4e998551e13fc93ce3f9", "placeholder": "\u200b", "style": "IPY_MODEL_02dfa88d6c0445fc94633149259828be", "tabbable": null, "tooltip": null, "value": "  0%"}}, "2b0a39c0c5dd47efb86bdc2a39e01d82": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "f0135df701324669857d8b3a05221acb": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "d02b33a9fa9148dcb52f496f8a06bb00": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_2b0a39c0c5dd47efb86bdc2a39e01d82", "placeholder": "\u200b", "style": "IPY_MODEL_f0135df701324669857d8b3a05221acb", "tabbable": null, "tooltip": null, "value": " 0/25 [00:00&lt;?, ?it/s]"}}, "99b6d27f4ccf4788979a8073cf31778e": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": "hidden", "width": null}}, "799692c0dff74951a22a2b3cc8db619c": {"model_name": "HBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_a1036dcff7ac453a962576c8d3644f6c", "IPY_MODEL_1913318c72f84c0794ee044bf4a11fc0", "IPY_MODEL_d02b33a9fa9148dcb52f496f8a06bb00"], "layout": "IPY_MODEL_99b6d27f4ccf4788979a8073cf31778e", "tabbable": null, "tooltip": null}}, "fb40c7f353d443c1a80cc33eb8f802cb": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "ebcb2bfad59844d081598c7756bccc3d": {"model_name": "ProgressStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "bar_color": null, "description_width": ""}}, "cf5e19bf00324864aaa3ce86eb24cf2f": {"model_name": "FloatProgressModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "ProgressView", "bar_style": "", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_fb40c7f353d443c1a80cc33eb8f802cb", "max": 25.0, "min": 0.0, "orientation": "horizontal", "style": "IPY_MODEL_ebcb2bfad59844d081598c7756bccc3d", "tabbable": null, "tooltip": null, "value": 25.0}}, "0ba33a5e507646d5a9ef6f0eb811332b": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "de1f78d1677544c59bf5bfdaf7e183d3": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "a03ffbac51174c219a52a55ad0094a5d": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_0ba33a5e507646d5a9ef6f0eb811332b", "placeholder": "\u200b", "style": "IPY_MODEL_de1f78d1677544c59bf5bfdaf7e183d3", "tabbable": null, "tooltip": null, "value": "  0%"}}, "51c717798d254cada96d57105dd0f002": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "0be73969fb91492b92ad2de0be1de3ac": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "724b71dbe6cc4391bea8b0d32952176d": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_51c717798d254cada96d57105dd0f002", "placeholder": "\u200b", "style": "IPY_MODEL_0be73969fb91492b92ad2de0be1de3ac", "tabbable": null, "tooltip": null, "value": " 0/25 [00:00&lt;?, ?it/s]"}}, "9b34ecd06c254349bdcd1763caf5929e": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": "hidden", "width": null}}, "95bb7fb0af294553804b4beb8fee25fc": {"model_name": "HBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_a03ffbac51174c219a52a55ad0094a5d", "IPY_MODEL_cf5e19bf00324864aaa3ce86eb24cf2f", "IPY_MODEL_724b71dbe6cc4391bea8b0d32952176d"], "layout": "IPY_MODEL_9b34ecd06c254349bdcd1763caf5929e", "tabbable": null, "tooltip": null}}, "1cce44b02c974c049245dbedfc8afe2e": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "2eaadd9862ea490ea68963bcf9755156": {"model_name": "ProgressStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "bar_color": null, "description_width": ""}}, "9f273fb7227544efaaecdaa8507ba1ec": {"model_name": "FloatProgressModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "ProgressView", "bar_style": "", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_1cce44b02c974c049245dbedfc8afe2e", "max": 25.0, "min": 0.0, "orientation": "horizontal", "style": "IPY_MODEL_2eaadd9862ea490ea68963bcf9755156", "tabbable": null, "tooltip": null, "value": 25.0}}, "5d0dfcd77860471d8f1598bfdbb55ac6": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "67cea8f1121f4b08999257e609ef939f": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "14157a99c1724022abe7e18852bd0ab8": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_5d0dfcd77860471d8f1598bfdbb55ac6", "placeholder": "\u200b", "style": "IPY_MODEL_67cea8f1121f4b08999257e609ef939f", "tabbable": null, "tooltip": null, "value": " 60%"}}, "d4ca3862a8e540b6b279df909a6b44e9": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "a4cdd87ce0124bfbb01b8770a6b24b6e": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "db848957e8d64575941a301e6bdd13c3": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_d4ca3862a8e540b6b279df909a6b44e9", "placeholder": "\u200b", "style": "IPY_MODEL_a4cdd87ce0124bfbb01b8770a6b24b6e", "tabbable": null, "tooltip": null, "value": " 15/25 [00:00&lt;00:00, 146.95it/s]"}}, "84db371b248644e98a4e3cedd977bea2": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": "hidden", "width": null}}, "601221a83e54454c860712ecd5fa9c1e": {"model_name": "HBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_14157a99c1724022abe7e18852bd0ab8", "IPY_MODEL_9f273fb7227544efaaecdaa8507ba1ec", "IPY_MODEL_db848957e8d64575941a301e6bdd13c3"], "layout": "IPY_MODEL_84db371b248644e98a4e3cedd977bea2", "tabbable": null, "tooltip": null}}, "24d21e8f1e2f4692be9cbae70ac690b0": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "dbdeff65f29048dbad77cba558593d97": {"model_name": "ProgressStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "bar_color": null, "description_width": ""}}, "28fdde7634a6447b91957d48d31edc5f": {"model_name": "FloatProgressModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "ProgressView", "bar_style": "", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_24d21e8f1e2f4692be9cbae70ac690b0", "max": 25.0, "min": 0.0, "orientation": "horizontal", "style": "IPY_MODEL_dbdeff65f29048dbad77cba558593d97", "tabbable": null, "tooltip": null, "value": 25.0}}, "00b270d1551d4694844363fd4eae2077": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "c51d3de1fe4146a485b2b01bc0b48fc6": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "3357f622de744befa1eed316219b22f1": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_00b270d1551d4694844363fd4eae2077", "placeholder": "\u200b", "style": "IPY_MODEL_c51d3de1fe4146a485b2b01bc0b48fc6", "tabbable": null, "tooltip": null, "value": " 52%"}}, "3f31fcc289f94274bf0ca3f1f93f6ec2": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "737efc6ad5e84370b2007e56ac1a7f73": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "71cfd11c616643beaec438dea48fdabd": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_3f31fcc289f94274bf0ca3f1f93f6ec2", "placeholder": "\u200b", "style": "IPY_MODEL_737efc6ad5e84370b2007e56ac1a7f73", "tabbable": null, "tooltip": null, "value": " 13/25 [00:00&lt;00:00, 127.82it/s]"}}, "2da13fd647ec455399b4d6842e4d72f6": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": "hidden", "width": null}}, "30368503857245d695cfe640f690f740": {"model_name": "HBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_3357f622de744befa1eed316219b22f1", "IPY_MODEL_28fdde7634a6447b91957d48d31edc5f", "IPY_MODEL_71cfd11c616643beaec438dea48fdabd"], "layout": "IPY_MODEL_2da13fd647ec455399b4d6842e4d72f6", "tabbable": null, "tooltip": null}}, "9dd8b04b42ed4ee19fa8351d196f0653": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "37a3b0a52040487ea9a86fba1edfd10f": {"model_name": "ProgressStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "bar_color": null, "description_width": ""}}, "0d89203479f04a4fb759d50098539353": {"model_name": "FloatProgressModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "ProgressView", "bar_style": "", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_9dd8b04b42ed4ee19fa8351d196f0653", "max": 25.0, "min": 0.0, "orientation": "horizontal", "style": "IPY_MODEL_37a3b0a52040487ea9a86fba1edfd10f", "tabbable": null, "tooltip": null, "value": 25.0}}, "0ae5f2219eaf4a8ea1bc8e4c765e63bd": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "648e087cb4294b26ad543027b1329f87": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "c79f11ba170646c5b3c4a5f22302baf6": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_0ae5f2219eaf4a8ea1bc8e4c765e63bd", "placeholder": "\u200b", "style": "IPY_MODEL_648e087cb4294b26ad543027b1329f87", "tabbable": null, "tooltip": null, "value": " 72%"}}, "2b53cc70e26a4c8aacd548cd1c8b4024": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "1459fff0e7fa40ca8984038f58ab80e2": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "d40a270012454d1a97642f9646fa2e1d": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_2b53cc70e26a4c8aacd548cd1c8b4024", "placeholder": "\u200b", "style": "IPY_MODEL_1459fff0e7fa40ca8984038f58ab80e2", "tabbable": null, "tooltip": null, "value": " 18/25 [00:00&lt;00:00, 90.49it/s]"}}, "cb62f686182b4d828f53b30705f41efc": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": "hidden", "width": null}}, "549a927c938d4229953dc2f2078588ed": {"model_name": "HBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_c79f11ba170646c5b3c4a5f22302baf6", "IPY_MODEL_0d89203479f04a4fb759d50098539353", "IPY_MODEL_d40a270012454d1a97642f9646fa2e1d"], "layout": "IPY_MODEL_cb62f686182b4d828f53b30705f41efc", "tabbable": null, "tooltip": null}}}, "version_major": 2, "version_minor": 0}</script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script crossorigin="anonymous" data-jupyter-widgets-cdn="https://cdn.jsdelivr.net/npm/" src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script src="../../../_static/js/custom.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="nl_means_layered" href="nl_means_layered.html" />
+    <link rel="prev" title="hold_peaks" href="hold_peaks.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+    <div class="bd-header-announcement container-fluid" id="banner">
+      
+
+    </div>
+
+    
+    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="bd-header__inner container-xl">
+
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+    <img src="../../../_static/porespy_logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/porespy_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="fas fa-bars"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class=" collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../installation.html">
+  Installation
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../basic_usage.html">
+  Basic Usage
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../modules/index.html">
+  Module and Function Reference
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../../../_examples/index.html">
+  Examples
+ </a>
+</li>
+
+    
+    <li class="nav-item">
+        <a class="nav-link nav-external" href="https://github.com/PMEAL/porespy/issues">Issue Tracker<i class="fas fa-external-link-alt"></i></a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link nav-external" href="https://github.com/PMEAL/porespy/discussions">Get Help<i class="fas fa-external-link-alt"></i></a>
+    </li>
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <span id="theme-switch" class="btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Quick Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/PMEAL/porespy" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://twitter.com/porespy" rel="noopener" target="_blank" title="Twitter"><span><i class="fab fa-twitter-square"></i></span>
+            <label class="sr-only">Twitter</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="bd-container container-xl">
+      <div class="bd-container__inner row">
+          
+
+<!-- Only show if we have sidebars configured, else just a small margin  -->
+<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+  <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../_examples/general/index.html">
+   General
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../general/denoising_and_segmenting_images.html">
+     Converting Greyscale Images to Binary
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../general/loading_images.html">
+     Opening and Preparing Images
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../_examples/generators/index.html">
+   Generators
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/generators/tutorials.html">
+     Tutorials
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/tutorials/Creating_Multiscale_Images.html">
+       Creating Multiscale Images
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/tutorials/cylinders.html">
+       Generating fibrous mats
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/tutorials/generate_spheres_packings.html">
+       Generating Sphere Packings from Digital Rocks Portal
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/tutorials/making_blobs.html">
+       Making blobs
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/generators/reference.html">
+     Reference
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/blobs.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         blobs
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/borders.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         borders
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/bundle_of_tubes.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         bundle_of_tubes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/cylinders.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         cylinders
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/cylindrical_plug.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         cylindrical_plug
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/faces.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         faces
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/fractal_noise.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         fractal_noise
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/insert_shape.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         insert_shape
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/lattice_spheres.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         lattice_spheres
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/line_segment.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         line_segment
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/overlapping_spheres.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         overlapping_spheres
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/polydisperse_spheres.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         polydisperse_spheres
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/pseudo_electrostatic_packing.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         pseudo_electrostatic_packing
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/pseudo_gravity_packing.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         pseudo_gravity_packing
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/random_cantor_dust.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         random_cantor_dust
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/rsa.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         rsa
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/sierpinski_foam.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         sierpinski_foam
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/sierpinski_foam2.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         sierpinski_foam2
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/spheres_from_coords.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         spheres_from_coords
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/voronoi_edges.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         voronoi_edges
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../../../_examples/filters/index.html">
+   Filters
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/filters/tutorials.html">
+     Tutorials
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../tutorials/adding_chords.html">
+       Applying chords to 2D and 3D images
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../tutorials/local_thickness.html">
+       Local thickness
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../tutorials/snow_partitioning.html">
+       SNOW partitioning
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../tutorials/snow_partitioning_parallel.html">
+       SNOW partitioning parallel
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="../../../_examples/filters/reference.html">
+     Reference
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3">
+      <a class="reference internal" href="apply_chords.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         apply_chords
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="apply_chords_3D.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         apply_chords_3D
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="apply_padded.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         apply_padded
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="chunked_func.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         chunked_func
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="distance_transform_lin.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         distance_transform_lin
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="fftmorphology.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         fftmorphology
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="fill_blind_pores.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         fill_blind_pores
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="find_disconnected_voxels.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         find_disconnected_voxels
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="find_dt_artifacts.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         find_dt_artifacts
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="find_peaks.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         find_peaks
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="find_trapped_regions.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         find_trapped_regions
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="flood.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         flood
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="flood_func.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         flood_func
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="hold_peaks.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         hold_peaks
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         local_thickness
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="nl_means_layered.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         nl_means_layered
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="nphase_border.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         nphase_border
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="pc_to_satn.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         pc_to_satn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="porosimetry.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         porosimetry
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="prune_branches.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         prune_branches
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="reduce_peaks.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         reduce_peaks
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="region_size.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         region_size
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="satn_to_seq.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         satn_to_seq
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="seq_to_satn.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         seq_to_satn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="size_to_satn.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         size_to_satn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="size_to_seq.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         size_to_seq
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="snow_partitioning.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         snow_partitioning
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="snow_partitioning_n.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         snow_partitioning_n
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="snow_partitioning_parallel.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         snow_partitioning_parallel
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="trim_disconnected_blobs.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         trim_disconnected_blobs
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="trim_extrema.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         trim_extrema
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="trim_floating_solid.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         trim_floating_solid
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="trim_nearby_peaks.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         trim_nearby_peaks
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="trim_nonpercolating_paths.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         trim_nonpercolating_paths
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="trim_saddle_points.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         trim_saddle_points
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="trim_small_clusters.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         trim_small_clusters
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../_examples/metrics/index.html">
+   Metrics
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/metrics/tutorials.html">
+     Tutorials
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+    <label for="toctree-checkbox-9">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/tutorials/computing_fractal_dim.html">
+       Measuring fractal dimension by box-counting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/tutorials/lineal_path_function.html">
+       The lineal path function
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/tutorials/porosity_profiles.html">
+       Obtaining the porosity profile along each principle axis
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/tutorials/regionprops_3d.html">
+       Using regionprops_3d to analyze properties of each pore
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/metrics/reference.html">
+     Reference
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+    <label for="toctree-checkbox-10">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/boxcount.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         boxcount
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/chord_counts.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         chord_counts
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/chord_length_distribution.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         chord_length_distribution
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/find_h.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         find_h
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/lineal_path_distribution.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         lineal_path_distribution
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/mesh__volume.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         mesh_volume
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/mesh_surface_area.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         mesh_surface_area
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/pc_curve.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         pc_curve
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/phase_fraction.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         phase_fraction
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/pore_size_distribution.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         pore_size_distribution
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/porosity.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         porosity
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/porosity_profile.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         porosity_profile
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/props_to_DataFrame.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         props_to_DataFrame
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/props_to_image.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         props_to_image
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/radial_density_distribution.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         radial_density_distribution
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/region_interface_areas.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         region_interface_areas
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/region_surface_areas.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         region_surface_areas
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/region_volumes.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         region_volumes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/regionprops_3D.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         regionprops_3D
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/representative_elementary_volume.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         representative_elementary_volume
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/satn_profile.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         satn_profile
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/two_point_correlation.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         two_point_correlation
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../_examples/networks/index.html">
+   Networks
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/networks/tutorials.html">
+     Tutorials
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+    <label for="toctree-checkbox-12">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/tutorials/adding_boundary_pores.html">
+       Adding boundary pores
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/tutorials/snow_advanced.html">
+       SNOW network extraction (advanced)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/tutorials/snow_basic.html">
+       SNOW network extraction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/tutorials/using_diffusive_size_factor_AI_with_snow.html">
+       Using AI based diffusive size factors for extracted networks
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/networks/reference.html">
+     Reference
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+    <label for="toctree-checkbox-13">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/reference/add_boundary_regions.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         add_boundary_regions
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/reference/diffusive_size_factor_AI.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         diffusive_size_factor_AI
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/reference/label_boundaries.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         label_boundaries
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/reference/label_phases.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         label_phases
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/reference/map_to_regions.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         map_to_regions
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/reference/regions_to_network.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         regions_to_network
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/reference/snow2.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         snow2
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../_examples/simulations/index.html">
+   Simulations
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+  <label for="toctree-checkbox-14">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/simulations/tutorials.html">
+     Tutorials
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+    <label for="toctree-checkbox-15">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../simulations/tutorials/drainage_with_gravity_advanced.html">
+       Details of Drainage Simulations with and without Gravity
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../simulations/tutorials/drainage_with_gravity_basic.html">
+       Basics of Peforming Drainage Simulations with and without Gravity
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../simulations/tutorials/finding_tortuosity_from_image.html">
+       Finding the Tortuosity (
+       <span class="math notranslate nohighlight">
+        \(\tau\)
+       </span>
+       ) of an Image Using tortuosity_fd
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../simulations/tutorials/using_ibip.html">
+       Image-based invasion percoalation
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../_examples/tools/index.html">
+   Tools
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+  <label for="toctree-checkbox-16">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/tools/reference.html">
+     Reference
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/align_image_with_openpnm.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         align_image_with_openpnm
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/bbox_to_slices.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         bbox_to_slices
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/extend_slice.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         extend_slice
+        </span>
+       </code>
+       [WIP]
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/extract_cylinder.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         extract_cylinder
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/extract_regions.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         extract_regions
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/extract_subsection.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         extract_subsection
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/get_border.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         get_border
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/get_planes.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         get_planes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/insert_cylinder.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         insert_cylinder
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/insert_sphere.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         insert_sphere
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/isolate_object.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         isolate_object
+        </span>
+       </code>
+       [WIP]
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/make_contiguous.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         make_contiguous
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/marching_map.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         marching_map
+        </span>
+       </code>
+       [WIP]
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/mesh_region.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         mesh_region
+        </span>
+       </code>
+       [WIP]
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/norm_to_uniform.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         norm_to_uniform
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/overlay.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         overlay
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/randomize_colors.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         randomize_colors
+        </span>
+       </code>
+       [WIP]
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/recombine.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         recombine
+        </span>
+       </code>
+       [WIP]
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/subdivide.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         subdivide
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/unpad.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         unpad
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../_examples/visualization/index.html">
+   Visualization
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+  <label for="toctree-checkbox-18">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/visualization/tutorials.html">
+     Tutorials
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/tutorials/visualizing_tif_in_paraveiw.html">
+       Visualizing a tif image in Paraview
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/visualization/reference.html">
+     Reference
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/bar.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         bar
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/imshow.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         imshow
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/prep_for_imshow.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         prep_for_imshow
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/satn_to_movie.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         satn_to_movie
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/satn_to_panels.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         satn_to_panels
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/sem.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         sem
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/set_mpl_style.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         set_mpl_style
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/show_3D.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         show_3D
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/show_mesh.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         show_mesh
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/show_panels.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         show_panels
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/show_planes.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         show_planes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/xray.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         xray
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../general/denoising_and_segmenting_images.html">
+   Converting Greyscale Images to Binary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../general/loading_images.html">
+   Opening and Preparing Images
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/tutorials/Creating_Multiscale_Images.html">
+   Creating Multiscale Images
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/tutorials/cylinders.html">
+   Generating fibrous mats
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/tutorials/generate_spheres_packings.html">
+   Generating Sphere Packings from Digital Rocks Portal
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/tutorials/making_blobs.html">
+   Making blobs
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/blobs.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     blobs
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/borders.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     borders
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/bundle_of_tubes.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     bundle_of_tubes
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/cylinders.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     cylinders
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/cylindrical_plug.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     cylindrical_plug
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/faces.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     faces
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/fractal_noise.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     fractal_noise
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/insert_shape.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     insert_shape
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/lattice_spheres.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     lattice_spheres
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/line_segment.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     line_segment
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/overlapping_spheres.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     overlapping_spheres
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/polydisperse_spheres.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     polydisperse_spheres
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/pseudo_electrostatic_packing.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     pseudo_electrostatic_packing
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/pseudo_gravity_packing.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     pseudo_gravity_packing
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/random_cantor_dust.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     random_cantor_dust
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/rsa.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     rsa
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/sierpinski_foam.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     sierpinski_foam
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/sierpinski_foam2.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     sierpinski_foam2
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/spheres_from_coords.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     spheres_from_coords
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/voronoi_edges.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     voronoi_edges
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tutorials/adding_chords.html">
+   Applying chords to 2D and 3D images
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tutorials/local_thickness.html">
+   Local thickness
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tutorials/snow_partitioning.html">
+   SNOW partitioning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tutorials/snow_partitioning_parallel.html">
+   SNOW partitioning parallel
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="apply_chords.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     apply_chords
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="apply_chords_3D.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     apply_chords_3D
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="apply_padded.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     apply_padded
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chunked_func.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     chunked_func
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="distance_transform_lin.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     distance_transform_lin
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="fftmorphology.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     fftmorphology
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="fill_blind_pores.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     fill_blind_pores
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="find_disconnected_voxels.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     find_disconnected_voxels
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="find_dt_artifacts.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     find_dt_artifacts
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="find_peaks.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     find_peaks
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="find_trapped_regions.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     find_trapped_regions
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="flood.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     flood
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="flood_func.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     flood_func
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="hold_peaks.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     hold_peaks
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     local_thickness
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="nl_means_layered.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     nl_means_layered
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="nphase_border.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     nphase_border
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="pc_to_satn.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     pc_to_satn
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="porosimetry.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     porosimetry
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="prune_branches.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     prune_branches
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reduce_peaks.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     reduce_peaks
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="region_size.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     region_size
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="satn_to_seq.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     satn_to_seq
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="seq_to_satn.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     seq_to_satn
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="size_to_satn.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     size_to_satn
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="size_to_seq.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     size_to_seq
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="snow_partitioning.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     snow_partitioning
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="snow_partitioning_n.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     snow_partitioning_n
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="snow_partitioning_parallel.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     snow_partitioning_parallel
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trim_disconnected_blobs.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     trim_disconnected_blobs
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trim_extrema.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     trim_extrema
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trim_floating_solid.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     trim_floating_solid
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trim_nearby_peaks.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     trim_nearby_peaks
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trim_nonpercolating_paths.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     trim_nonpercolating_paths
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trim_saddle_points.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     trim_saddle_points
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trim_small_clusters.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     trim_small_clusters
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/tutorials/computing_fractal_dim.html">
+   Measuring fractal dimension by box-counting
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/tutorials/lineal_path_function.html">
+   The lineal path function
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/tutorials/porosity_profiles.html">
+   Obtaining the porosity profile along each principle axis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/tutorials/regionprops_3d.html">
+   Using regionprops_3d to analyze properties of each pore
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/boxcount.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     boxcount
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/chord_counts.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     chord_counts
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/chord_length_distribution.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     chord_length_distribution
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/find_h.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     find_h
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/lineal_path_distribution.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     lineal_path_distribution
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/mesh__volume.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     mesh_volume
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/mesh_surface_area.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     mesh_surface_area
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/pc_curve.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     pc_curve
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/phase_fraction.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     phase_fraction
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/pore_size_distribution.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     pore_size_distribution
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/porosity.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     porosity
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/porosity_profile.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     porosity_profile
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/props_to_DataFrame.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     props_to_DataFrame
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/props_to_image.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     props_to_image
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/radial_density_distribution.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     radial_density_distribution
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/region_interface_areas.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     region_interface_areas
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/region_surface_areas.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     region_surface_areas
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/region_volumes.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     region_volumes
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/regionprops_3D.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     regionprops_3D
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/representative_elementary_volume.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     representative_elementary_volume
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/satn_profile.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     satn_profile
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/two_point_correlation.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     two_point_correlation
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/tutorials/adding_boundary_pores.html">
+   Adding boundary pores
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/tutorials/snow_advanced.html">
+   SNOW network extraction (advanced)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/tutorials/snow_basic.html">
+   SNOW network extraction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/tutorials/using_diffusive_size_factor_AI_with_snow.html">
+   Using AI based diffusive size factors for extracted networks
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/reference/add_boundary_regions.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     add_boundary_regions
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/reference/diffusive_size_factor_AI.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     diffusive_size_factor_AI
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/reference/label_boundaries.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     label_boundaries
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/reference/label_phases.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     label_phases
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/reference/map_to_regions.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     map_to_regions
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/reference/regions_to_network.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     regions_to_network
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/reference/snow2.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     snow2
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../simulations/tutorials/drainage_with_gravity_advanced.html">
+   Details of Drainage Simulations with and without Gravity
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../simulations/tutorials/drainage_with_gravity_basic.html">
+   Basics of Peforming Drainage Simulations with and without Gravity
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../simulations/tutorials/finding_tortuosity_from_image.html">
+   Finding the Tortuosity (
+   <span class="math notranslate nohighlight">
+    \(\tau\)
+   </span>
+   ) of an Image Using tortuosity_fd
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../simulations/tutorials/using_ibip.html">
+   Image-based invasion percoalation
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/align_image_with_openpnm.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     align_image_with_openpnm
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/bbox_to_slices.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     bbox_to_slices
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/extend_slice.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     extend_slice
+    </span>
+   </code>
+   [WIP]
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/extract_cylinder.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     extract_cylinder
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/extract_regions.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     extract_regions
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/extract_subsection.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     extract_subsection
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/get_border.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     get_border
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/get_planes.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     get_planes
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/insert_cylinder.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     insert_cylinder
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/insert_sphere.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     insert_sphere
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/isolate_object.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     isolate_object
+    </span>
+   </code>
+   [WIP]
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/make_contiguous.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     make_contiguous
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/marching_map.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     marching_map
+    </span>
+   </code>
+   [WIP]
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/mesh_region.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     mesh_region
+    </span>
+   </code>
+   [WIP]
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/norm_to_uniform.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     norm_to_uniform
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/overlay.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     overlay
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/randomize_colors.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     randomize_colors
+    </span>
+   </code>
+   [WIP]
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/recombine.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     recombine
+    </span>
+   </code>
+   [WIP]
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/subdivide.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     subdivide
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/unpad.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     unpad
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/tutorials/visualizing_tif_in_paraveiw.html">
+   Visualizing a tif image in Paraview
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/bar.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     bar
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/imshow.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     imshow
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/prep_for_imshow.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     prep_for_imshow
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/satn_to_movie.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     satn_to_movie
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/satn_to_panels.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     satn_to_panels
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/sem.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     sem
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/set_mpl_style.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     set_mpl_style
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/show_3D.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     show_3D
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/show_mesh.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     show_mesh
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/show_panels.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     show_panels
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/show_planes.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     show_planes
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/xray.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     xray
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+
+  </div>
+</nav>
+  </div>
+  <div class="sidebar-end-items">
+  </div>
+</div>
+
+
+          
+
+
+<div class="bd-sidebar-secondary d-none d-xl-block col-xl-2 bd-toc">
+  
+    
+    <div class="toc-item">
+      
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#im">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     im
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sizes">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     sizes
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mode">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     mode
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#divs">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     divs
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+
+</nav>
+    </div>
+    
+    <div class="toc-item">
+      
+    </div>
+    
+  
+</div>
+
+
+          
+          
+          <div class="bd-content col-12 col-md-9 col-xl-7">
+              
+              <article class="bd-article" role="main">
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="local-thickness">
+<h1><code class="docutils literal notranslate"><span class="pre">local_thickness</span></code><a class="headerlink" href="#local-thickness" title="Permalink to this heading">#</a></h1>
+<p>This replaces each voxel with the radius of the largest sphere that would overlap it.  This is different than the distance transform which is the radius of the largest sphere which could be centered on it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">porespy</span> <span class="k">as</span> <span class="nn">ps</span>
+<span class="n">ps</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">set_mpl_style</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The arguments and their defaults are:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">inspect</span>
+<span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">ps</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">local_thickness</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Signature (im, sizes=25, mode=&#39;hybrid&#39;, divs=1)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="im">
+<h2><code class="docutils literal notranslate"><span class="pre">im</span></code><a class="headerlink" href="#im" title="Permalink to this heading">#</a></h2>
+<p>The image can be either 2D or 3D:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">im</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">generators</span><span class="o">.</span><span class="n">blobs</span><span class="p">([</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">])</span>
+<span class="n">lt</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">local_thickness</span><span class="p">(</span><span class="n">im</span><span class="o">=</span><span class="n">im</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">lt</span><span class="o">/</span><span class="n">im</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="kc">False</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "21de879d6bab47058934f901b066bc17"}</script><img alt="../../../_images/25dab085d193195410d39cbd216b8c7bda436c27cd25136f6b7f3cb1f83178cb.png" src="../../../_images/25dab085d193195410d39cbd216b8c7bda436c27cd25136f6b7f3cb1f83178cb.png" />
+</div>
+</div>
+</section>
+<section id="sizes">
+<h2><code class="docutils literal notranslate"><span class="pre">sizes</span></code><a class="headerlink" href="#sizes" title="Permalink to this heading">#</a></h2>
+<p>The number of bins to use when drawing spheres, or the actual bins to use.  The default is 25 which means that 25 logarithmically spaced sizes are used from the maximum of the distance transform down to 1.  If an array or list of actual sizes is provided these are used directly, which can be useful for generating custom bins, for instance with linear or bimodal spacing.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lt</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">local_thickness</span><span class="p">(</span><span class="n">im</span><span class="o">=</span><span class="n">im</span><span class="p">,</span> <span class="n">sizes</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">lt</span><span class="o">/</span><span class="n">im</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="kc">False</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "bdfc692d47fa4661813991155f36ff93"}</script><img alt="../../../_images/ccb519d2f19aa6750ff18c478801bca6ad5abaca83658521148ebfa1bb5a9f1c.png" src="../../../_images/ccb519d2f19aa6750ff18c478801bca6ad5abaca83658521148ebfa1bb5a9f1c.png" />
+</div>
+</div>
+</section>
+<section id="mode">
+<h2><code class="docutils literal notranslate"><span class="pre">mode</span></code><a class="headerlink" href="#mode" title="Permalink to this heading">#</a></h2>
+<p>This controls which method is used.  The default is a ‘hybrid’ which uses a the threshold of a distance transform to perform an erosion, then fft-based dilation to generate spheres.  Other options are <code class="docutils literal notranslate"><span class="pre">dt</span></code> which uses a distance transform for both steps, or ‘mio’ which uses morphological operations for both steps. The selected method will affect the speed, but this depends on the computer being used.  All results should be exactly the same, and this is ensured in a unit test:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lt1</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">local_thickness</span><span class="p">(</span><span class="n">im</span><span class="o">=</span><span class="n">im</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;hybrid&#39;</span><span class="p">)</span>
+<span class="n">lt2</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">local_thickness</span><span class="p">(</span><span class="n">im</span><span class="o">=</span><span class="n">im</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;dt&#39;</span><span class="p">)</span>
+<span class="n">lt3</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">local_thickness</span><span class="p">(</span><span class="n">im</span><span class="o">=</span><span class="n">im</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;mio&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">lt1</span><span class="o">/</span><span class="n">im</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">lt2</span><span class="o">/</span><span class="n">im</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">lt3</span><span class="o">/</span><span class="n">im</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="kc">False</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "799692c0dff74951a22a2b3cc8db619c"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "95bb7fb0af294553804b4beb8fee25fc"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "601221a83e54454c860712ecd5fa9c1e"}</script><img alt="../../../_images/3bd2859fd9678f1eaa8e2d4f942c884cb14321d8f856649dba05441fe7be35ed.png" src="../../../_images/3bd2859fd9678f1eaa8e2d4f942c884cb14321d8f856649dba05441fe7be35ed.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;All elements in the hybrid and dt modes are equal:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">lt1</span> <span class="o">==</span> <span class="n">lt2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;All elements in the hybrid and mio modes are equal:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">lt1</span> <span class="o">==</span> <span class="n">lt3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>All elements in the hybrid and dt modes are equal: True
+All elements in the hybrid and mio modes are equal: True
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="divs">
+<h2><code class="docutils literal notranslate"><span class="pre">divs</span></code><a class="headerlink" href="#divs" title="Permalink to this heading">#</a></h2>
+<p>This indicates if the image should be divided into chunks and processed in parallel.  An integer indicates equal chunks in all directions, or a list can be given with the number of chunks to create in each direction.  Dask is used behind the scenes to apply the filters to each chunk.  The number of cores used is set in <code class="docutils literal notranslate"><span class="pre">porespy.settings</span></code>, with the default being all cores.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lt1</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">local_thickness</span><span class="p">(</span><span class="n">im</span><span class="o">=</span><span class="n">im</span><span class="p">,</span> <span class="n">divs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">lt2</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">local_thickness</span><span class="p">(</span><span class="n">im</span><span class="o">=</span><span class="n">im</span><span class="p">,</span> <span class="n">divs</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">lt1</span><span class="o">/</span><span class="n">im</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">lt2</span><span class="o">/</span><span class="n">im</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="kc">False</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "30368503857245d695cfe640f690f740"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "549a927c938d4229953dc2f2078588ed"}</script><img alt="../../../_images/26cea66756db784c74db2a0cafd94e68b08b2b6e88b35d622cf588b05bf7fe77.png" src="../../../_images/26cea66756db784c74db2a0cafd94e68b08b2b6e88b35d622cf588b05bf7fe77.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Results are identical regardless of chunk size&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">lt1</span> <span class="o">==</span> <span class="n">lt2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Results are identical regardless of chunk size True
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+
+              </article>
+              
+
+              
+          </div>
+          
+      </div>
+    </div>
+
+  
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695"></script>
+
+<footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    <p class="copyright">
+    &copy; Copyright 2023, PMEAL.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+  </div>
+  
+</div>
+</footer>
+  </body>
+</html>

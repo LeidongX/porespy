@@ -3,7 +3,7 @@
 .. module:: porespy
    :noindex:
 
-.. image:: ./_static/images/porespy_logo.png
+.. image:: ./_static/images/porespy_logo.jpg
    :name: banner
 
 ###############################################
@@ -37,22 +37,22 @@ PoreSpy consists of the following modules:
 -  ``metrics``: Tools for quantifying properties of images
 -  ``networks``: Algorithms and tools for analyzing images as pore
    networks
+-  ``simulations``: Functions for performing physics-based simulations on
+   images
+-  ``tools``: Various useful tools for working with images
 -  ``visualization``: Helper functions for creating useful views of the
    image
 -  ``io``: Functions for outputting image data in various formats for
    use in common software
--  ``tools``: Various useful tools for working with images
 
 .. toctree::
    :hidden:
    :maxdepth: 0
 
-   user_guide/index
+   installation
+   basic_usage
    modules/index
-   examples
-
-.. WARNING: examples.rst MUST BE THE LAST ENTRY, OTHERWISE OUR JS
-.. SCRIPT MIGHT BREAK! SEE _static/js/custom.js
+   _examples/index
 
 
 Gallery

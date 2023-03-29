@@ -1,0 +1,2990 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Basics of Peforming Drainage Simulations with and without Gravity &#8212; PoreSpy  documentation</title>
+<script>
+  document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
+</script>
+
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+
+
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
+
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="application/vnd.jupyter.widget-state+json">{"state": {"68e17265a3f64efe951616302b203353": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "58148382725a429da980af27112f5f5b": {"model_name": "ProgressStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "bar_color": null, "description_width": ""}}, "657c849911d049268b769e4bc354071e": {"model_name": "FloatProgressModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "ProgressView", "bar_style": "", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_68e17265a3f64efe951616302b203353", "max": 25.0, "min": 0.0, "orientation": "horizontal", "style": "IPY_MODEL_58148382725a429da980af27112f5f5b", "tabbable": null, "tooltip": null, "value": 25.0}}, "0500589da2ed49c295f2f6775d3dfce7": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "b1b098870b1d46cc8a48261ed9ce3381": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "ed23abd375334f0897cbda5d9f18cb2d": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_0500589da2ed49c295f2f6775d3dfce7", "placeholder": "\u200b", "style": "IPY_MODEL_b1b098870b1d46cc8a48261ed9ce3381", "tabbable": null, "tooltip": null, "value": " 84%"}}, "eb38ea3b55ff42178cb95260f8d24e89": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "2d79993f239b4ccd853690df59d79cca": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "857248ec2a7e473dacef2d0b3deb09cb": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_eb38ea3b55ff42178cb95260f8d24e89", "placeholder": "\u200b", "style": "IPY_MODEL_2d79993f239b4ccd853690df59d79cca", "tabbable": null, "tooltip": null, "value": " 21/25 [00:07&lt;00:00,  8.20it/s]"}}, "45fb9f11ad044eba9f76cf85f2a47c9c": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": "hidden", "width": null}}, "ab9a3a98f6cd4567b1fdedde0a74e4c0": {"model_name": "HBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_ed23abd375334f0897cbda5d9f18cb2d", "IPY_MODEL_657c849911d049268b769e4bc354071e", "IPY_MODEL_857248ec2a7e473dacef2d0b3deb09cb"], "layout": "IPY_MODEL_45fb9f11ad044eba9f76cf85f2a47c9c", "tabbable": null, "tooltip": null}}, "e2958c2fd59d4ac08b0f9d891d6aa0b5": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "4f83278209a6494d8f82ebab91e74f19": {"model_name": "ProgressStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "bar_color": null, "description_width": ""}}, "53294546004d41158441679307488c82": {"model_name": "FloatProgressModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "ProgressView", "bar_style": "", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_e2958c2fd59d4ac08b0f9d891d6aa0b5", "max": 13.0, "min": 0.0, "orientation": "horizontal", "style": "IPY_MODEL_4f83278209a6494d8f82ebab91e74f19", "tabbable": null, "tooltip": null, "value": 13.0}}, "6344d26d1a4146a0934f2186bf0709ac": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "41fba941e4a5475c9595436c18e92509": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "355cdacea41646ffb609bca2a4c8ad96": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_6344d26d1a4146a0934f2186bf0709ac", "placeholder": "\u200b", "style": "IPY_MODEL_41fba941e4a5475c9595436c18e92509", "tabbable": null, "tooltip": null, "value": "  0%"}}, "6eb70efa04ff419da5581c981c6b6270": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "1853487feae44242b2d54f1e8269256e": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "d39077f30dc74c7d9925bb5c3ec6e21c": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_6eb70efa04ff419da5581c981c6b6270", "placeholder": "\u200b", "style": "IPY_MODEL_1853487feae44242b2d54f1e8269256e", "tabbable": null, "tooltip": null, "value": " 0/13 [00:00&lt;?, ?it/s]"}}, "6b5e3b27293349bdbcf6c21511d4ea7b": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": "hidden", "width": null}}, "38792f0934a74a2cb9e7dfcd0f14a287": {"model_name": "HBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_355cdacea41646ffb609bca2a4c8ad96", "IPY_MODEL_53294546004d41158441679307488c82", "IPY_MODEL_d39077f30dc74c7d9925bb5c3ec6e21c"], "layout": "IPY_MODEL_6b5e3b27293349bdbcf6c21511d4ea7b", "tabbable": null, "tooltip": null}}, "dd85e28583884dd39baf48daf5409c26": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "7e67e9876a4543fa81def619c6f910d7": {"model_name": "ProgressStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "bar_color": null, "description_width": ""}}, "a4d5b1116f68463f8c57c69d0fb65e4e": {"model_name": "FloatProgressModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "ProgressView", "bar_style": "", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_dd85e28583884dd39baf48daf5409c26", "max": 25.0, "min": 0.0, "orientation": "horizontal", "style": "IPY_MODEL_7e67e9876a4543fa81def619c6f910d7", "tabbable": null, "tooltip": null, "value": 25.0}}, "be214a2a9ae94abd9c602fca06ecb697": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "b4a773763a4f457ca2963afb11699f7a": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "5357082c0ffd4ee7b8c38edb81b83bb9": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_be214a2a9ae94abd9c602fca06ecb697", "placeholder": "\u200b", "style": "IPY_MODEL_b4a773763a4f457ca2963afb11699f7a", "tabbable": null, "tooltip": null, "value": "100%"}}, "75688df12ce74372b2397b4ccfb5ca8e": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "0cf738d483034871b6c84083fbbb73b1": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "c6d6584002204579aadeff36047d9238": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_75688df12ce74372b2397b4ccfb5ca8e", "placeholder": "\u200b", "style": "IPY_MODEL_0cf738d483034871b6c84083fbbb73b1", "tabbable": null, "tooltip": null, "value": " 25/25 [00:06&lt;00:00, 12.40it/s]"}}, "5cb2ce8681c44b2e9b84a926ec60c550": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": "hidden", "width": null}}, "79e7a1711f744fdd8a903ca23997d06a": {"model_name": "HBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_5357082c0ffd4ee7b8c38edb81b83bb9", "IPY_MODEL_a4d5b1116f68463f8c57c69d0fb65e4e", "IPY_MODEL_c6d6584002204579aadeff36047d9238"], "layout": "IPY_MODEL_5cb2ce8681c44b2e9b84a926ec60c550", "tabbable": null, "tooltip": null}}, "f04249e66d0a4706aaecc7ae2ef63509": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "7f5d1c8d61c849ac93267d6945b69c73": {"model_name": "ProgressStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "bar_color": null, "description_width": ""}}, "4f2557db827f47248800a449c60deb3d": {"model_name": "FloatProgressModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "ProgressView", "bar_style": "", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_f04249e66d0a4706aaecc7ae2ef63509", "max": 23.0, "min": 0.0, "orientation": "horizontal", "style": "IPY_MODEL_7f5d1c8d61c849ac93267d6945b69c73", "tabbable": null, "tooltip": null, "value": 23.0}}, "15e45473fded42a89bb765779796bcfa": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "a32da366425a442fbd829c3fd7fab439": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "228d6c259fc24b329ba0f8d38ae57c61": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_15e45473fded42a89bb765779796bcfa", "placeholder": "\u200b", "style": "IPY_MODEL_a32da366425a442fbd829c3fd7fab439", "tabbable": null, "tooltip": null, "value": "  0%"}}, "c3aa72726c7a4053912ca1f62188a617": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "f3f61e3ee9314b498c2dc95812844be8": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "6599dd9e151946bc8f48ff8dde2de390": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_c3aa72726c7a4053912ca1f62188a617", "placeholder": "\u200b", "style": "IPY_MODEL_f3f61e3ee9314b498c2dc95812844be8", "tabbable": null, "tooltip": null, "value": " 0/23 [00:00&lt;?, ?it/s]"}}, "3e81b0d5848f4ba78e87da2ccd35da92": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": "hidden", "width": null}}, "d123d57294ee46128df2266901198e90": {"model_name": "HBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_228d6c259fc24b329ba0f8d38ae57c61", "IPY_MODEL_4f2557db827f47248800a449c60deb3d", "IPY_MODEL_6599dd9e151946bc8f48ff8dde2de390"], "layout": "IPY_MODEL_3e81b0d5848f4ba78e87da2ccd35da92", "tabbable": null, "tooltip": null}}}, "version_major": 2, "version_minor": 0}</script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script crossorigin="anonymous" data-jupyter-widgets-cdn="https://cdn.jsdelivr.net/npm/" src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script src="../../../_static/js/custom.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Finding the Tortuosity (\(\tau\)) of an Image Using tortuosity_fd" href="finding_tortuosity_from_image.html" />
+    <link rel="prev" title="Details of Drainage Simulations with and without Gravity" href="drainage_with_gravity_advanced.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+    <div class="bd-header-announcement container-fluid" id="banner">
+      
+
+    </div>
+
+    
+    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="bd-header__inner container-xl">
+
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+    <img src="../../../_static/porespy_logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/porespy_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="fas fa-bars"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class=" collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../installation.html">
+  Installation
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../basic_usage.html">
+  Basic Usage
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../modules/index.html">
+  Module and Function Reference
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../../../_examples/index.html">
+  Examples
+ </a>
+</li>
+
+    
+    <li class="nav-item">
+        <a class="nav-link nav-external" href="https://github.com/PMEAL/porespy/issues">Issue Tracker<i class="fas fa-external-link-alt"></i></a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link nav-external" href="https://github.com/PMEAL/porespy/discussions">Get Help<i class="fas fa-external-link-alt"></i></a>
+    </li>
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <span id="theme-switch" class="btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Quick Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/PMEAL/porespy" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://twitter.com/porespy" rel="noopener" target="_blank" title="Twitter"><span><i class="fab fa-twitter-square"></i></span>
+            <label class="sr-only">Twitter</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="bd-container container-xl">
+      <div class="bd-container__inner row">
+          
+
+<!-- Only show if we have sidebars configured, else just a small margin  -->
+<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+  <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../_examples/general/index.html">
+   General
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../general/denoising_and_segmenting_images.html">
+     Converting Greyscale Images to Binary
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../general/loading_images.html">
+     Opening and Preparing Images
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../_examples/generators/index.html">
+   Generators
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/generators/tutorials.html">
+     Tutorials
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/tutorials/Creating_Multiscale_Images.html">
+       Creating Multiscale Images
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/tutorials/cylinders.html">
+       Generating fibrous mats
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/tutorials/generate_spheres_packings.html">
+       Generating Sphere Packings from Digital Rocks Portal
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/tutorials/making_blobs.html">
+       Making blobs
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/generators/reference.html">
+     Reference
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/blobs.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         blobs
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/borders.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         borders
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/bundle_of_tubes.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         bundle_of_tubes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/cylinders.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         cylinders
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/cylindrical_plug.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         cylindrical_plug
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/faces.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         faces
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/fractal_noise.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         fractal_noise
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/insert_shape.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         insert_shape
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/lattice_spheres.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         lattice_spheres
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/line_segment.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         line_segment
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/overlapping_spheres.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         overlapping_spheres
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/polydisperse_spheres.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         polydisperse_spheres
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/pseudo_electrostatic_packing.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         pseudo_electrostatic_packing
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/pseudo_gravity_packing.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         pseudo_gravity_packing
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/random_cantor_dust.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         random_cantor_dust
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/rsa.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         rsa
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/sierpinski_foam.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         sierpinski_foam
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/sierpinski_foam2.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         sierpinski_foam2
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/spheres_from_coords.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         spheres_from_coords
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../generators/reference/voronoi_edges.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         voronoi_edges
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../_examples/filters/index.html">
+   Filters
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/filters/tutorials.html">
+     Tutorials
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/tutorials/adding_chords.html">
+       Applying chords to 2D and 3D images
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/tutorials/local_thickness.html">
+       Local thickness
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/tutorials/snow_partitioning.html">
+       SNOW partitioning
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/tutorials/snow_partitioning_parallel.html">
+       SNOW partitioning parallel
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/filters/reference.html">
+     Reference
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/apply_chords.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         apply_chords
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/apply_chords_3D.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         apply_chords_3D
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/apply_padded.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         apply_padded
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/chunked_func.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         chunked_func
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/distance_transform_lin.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         distance_transform_lin
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/fftmorphology.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         fftmorphology
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/fill_blind_pores.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         fill_blind_pores
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/find_disconnected_voxels.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         find_disconnected_voxels
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/find_dt_artifacts.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         find_dt_artifacts
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/find_peaks.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         find_peaks
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/find_trapped_regions.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         find_trapped_regions
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/flood.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         flood
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/flood_func.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         flood_func
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/hold_peaks.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         hold_peaks
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/local_thickness.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         local_thickness
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/nl_means_layered.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         nl_means_layered
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/nphase_border.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         nphase_border
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/pc_to_satn.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         pc_to_satn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/porosimetry.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         porosimetry
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/prune_branches.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         prune_branches
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/reduce_peaks.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         reduce_peaks
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/region_size.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         region_size
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/satn_to_seq.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         satn_to_seq
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/seq_to_satn.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         seq_to_satn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/size_to_satn.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         size_to_satn
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/size_to_seq.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         size_to_seq
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/snow_partitioning.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         snow_partitioning
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/snow_partitioning_n.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         snow_partitioning_n
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/snow_partitioning_parallel.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         snow_partitioning_parallel
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/trim_disconnected_blobs.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         trim_disconnected_blobs
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/trim_extrema.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         trim_extrema
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/trim_floating_solid.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         trim_floating_solid
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/trim_nearby_peaks.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         trim_nearby_peaks
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/trim_nonpercolating_paths.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         trim_nonpercolating_paths
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/trim_saddle_points.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         trim_saddle_points
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../filters/reference/trim_small_clusters.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         trim_small_clusters
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../_examples/metrics/index.html">
+   Metrics
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/metrics/tutorials.html">
+     Tutorials
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+    <label for="toctree-checkbox-9">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/tutorials/computing_fractal_dim.html">
+       Measuring fractal dimension by box-counting
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/tutorials/lineal_path_function.html">
+       The lineal path function
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/tutorials/porosity_profiles.html">
+       Obtaining the porosity profile along each principle axis
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/tutorials/regionprops_3d.html">
+       Using regionprops_3d to analyze properties of each pore
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/metrics/reference.html">
+     Reference
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+    <label for="toctree-checkbox-10">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/boxcount.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         boxcount
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/chord_counts.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         chord_counts
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/chord_length_distribution.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         chord_length_distribution
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/find_h.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         find_h
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/lineal_path_distribution.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         lineal_path_distribution
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/mesh__volume.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         mesh_volume
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/mesh_surface_area.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         mesh_surface_area
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/pc_curve.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         pc_curve
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/phase_fraction.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         phase_fraction
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/pore_size_distribution.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         pore_size_distribution
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/porosity.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         porosity
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/porosity_profile.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         porosity_profile
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/props_to_DataFrame.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         props_to_DataFrame
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/props_to_image.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         props_to_image
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/radial_density_distribution.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         radial_density_distribution
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/region_interface_areas.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         region_interface_areas
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/region_surface_areas.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         region_surface_areas
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/region_volumes.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         region_volumes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/regionprops_3D.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         regionprops_3D
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/representative_elementary_volume.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         representative_elementary_volume
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/satn_profile.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         satn_profile
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../metrics/reference/two_point_correlation.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         two_point_correlation
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../_examples/networks/index.html">
+   Networks
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/networks/tutorials.html">
+     Tutorials
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+    <label for="toctree-checkbox-12">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/tutorials/adding_boundary_pores.html">
+       Adding boundary pores
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/tutorials/snow_advanced.html">
+       SNOW network extraction (advanced)
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/tutorials/snow_basic.html">
+       SNOW network extraction
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/tutorials/using_diffusive_size_factor_AI_with_snow.html">
+       Using AI based diffusive size factors for extracted networks
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/networks/reference.html">
+     Reference
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+    <label for="toctree-checkbox-13">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/reference/add_boundary_regions.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         add_boundary_regions
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/reference/diffusive_size_factor_AI.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         diffusive_size_factor_AI
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/reference/label_boundaries.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         label_boundaries
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/reference/label_phases.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         label_phases
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/reference/map_to_regions.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         map_to_regions
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/reference/regions_to_network.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         regions_to_network
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../networks/reference/snow2.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         snow2
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../../../_examples/simulations/index.html">
+   Simulations
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+  <label for="toctree-checkbox-14">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="../../../_examples/simulations/tutorials.html">
+     Tutorials
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+    <label for="toctree-checkbox-15">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3">
+      <a class="reference internal" href="drainage_with_gravity_advanced.html">
+       Details of Drainage Simulations with and without Gravity
+      </a>
+     </li>
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       Basics of Peforming Drainage Simulations with and without Gravity
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="finding_tortuosity_from_image.html">
+       Finding the Tortuosity (
+       <span class="math notranslate nohighlight">
+        \(\tau\)
+       </span>
+       ) of an Image Using tortuosity_fd
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="using_ibip.html">
+       Image-based invasion percoalation
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../_examples/tools/index.html">
+   Tools
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+  <label for="toctree-checkbox-16">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/tools/reference.html">
+     Reference
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/align_image_with_openpnm.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         align_image_with_openpnm
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/bbox_to_slices.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         bbox_to_slices
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/extend_slice.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         extend_slice
+        </span>
+       </code>
+       [WIP]
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/extract_cylinder.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         extract_cylinder
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/extract_regions.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         extract_regions
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/extract_subsection.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         extract_subsection
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/get_border.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         get_border
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/get_planes.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         get_planes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/insert_cylinder.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         insert_cylinder
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/insert_sphere.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         insert_sphere
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/isolate_object.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         isolate_object
+        </span>
+       </code>
+       [WIP]
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/make_contiguous.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         make_contiguous
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/marching_map.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         marching_map
+        </span>
+       </code>
+       [WIP]
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/mesh_region.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         mesh_region
+        </span>
+       </code>
+       [WIP]
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/norm_to_uniform.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         norm_to_uniform
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/overlay.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         overlay
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/randomize_colors.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         randomize_colors
+        </span>
+       </code>
+       [WIP]
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/recombine.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         recombine
+        </span>
+       </code>
+       [WIP]
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/subdivide.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         subdivide
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../tools/reference/unpad.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         unpad
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../_examples/visualization/index.html">
+   Visualization
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+  <label for="toctree-checkbox-18">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/visualization/tutorials.html">
+     Tutorials
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/tutorials/visualizing_tif_in_paraveiw.html">
+       Visualizing a tif image in Paraview
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../_examples/visualization/reference.html">
+     Reference
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/bar.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         bar
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/imshow.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         imshow
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/prep_for_imshow.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         prep_for_imshow
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/satn_to_movie.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         satn_to_movie
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/satn_to_panels.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         satn_to_panels
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/sem.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         sem
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/set_mpl_style.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         set_mpl_style
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/show_3D.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         show_3D
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/show_mesh.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         show_mesh
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/show_panels.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         show_panels
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/show_planes.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         show_planes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../visualization/reference/xray.html">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         xray
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../general/denoising_and_segmenting_images.html">
+   Converting Greyscale Images to Binary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../general/loading_images.html">
+   Opening and Preparing Images
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/tutorials/Creating_Multiscale_Images.html">
+   Creating Multiscale Images
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/tutorials/cylinders.html">
+   Generating fibrous mats
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/tutorials/generate_spheres_packings.html">
+   Generating Sphere Packings from Digital Rocks Portal
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/tutorials/making_blobs.html">
+   Making blobs
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/blobs.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     blobs
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/borders.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     borders
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/bundle_of_tubes.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     bundle_of_tubes
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/cylinders.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     cylinders
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/cylindrical_plug.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     cylindrical_plug
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/faces.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     faces
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/fractal_noise.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     fractal_noise
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/insert_shape.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     insert_shape
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/lattice_spheres.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     lattice_spheres
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/line_segment.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     line_segment
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/overlapping_spheres.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     overlapping_spheres
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/polydisperse_spheres.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     polydisperse_spheres
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/pseudo_electrostatic_packing.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     pseudo_electrostatic_packing
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/pseudo_gravity_packing.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     pseudo_gravity_packing
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/random_cantor_dust.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     random_cantor_dust
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/rsa.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     rsa
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/sierpinski_foam.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     sierpinski_foam
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/sierpinski_foam2.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     sierpinski_foam2
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/spheres_from_coords.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     spheres_from_coords
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../generators/reference/voronoi_edges.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     voronoi_edges
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/tutorials/adding_chords.html">
+   Applying chords to 2D and 3D images
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/tutorials/local_thickness.html">
+   Local thickness
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/tutorials/snow_partitioning.html">
+   SNOW partitioning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/tutorials/snow_partitioning_parallel.html">
+   SNOW partitioning parallel
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/apply_chords.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     apply_chords
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/apply_chords_3D.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     apply_chords_3D
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/apply_padded.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     apply_padded
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/chunked_func.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     chunked_func
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/distance_transform_lin.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     distance_transform_lin
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/fftmorphology.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     fftmorphology
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/fill_blind_pores.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     fill_blind_pores
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/find_disconnected_voxels.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     find_disconnected_voxels
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/find_dt_artifacts.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     find_dt_artifacts
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/find_peaks.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     find_peaks
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/find_trapped_regions.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     find_trapped_regions
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/flood.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     flood
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/flood_func.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     flood_func
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/hold_peaks.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     hold_peaks
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/local_thickness.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     local_thickness
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/nl_means_layered.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     nl_means_layered
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/nphase_border.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     nphase_border
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/pc_to_satn.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     pc_to_satn
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/porosimetry.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     porosimetry
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/prune_branches.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     prune_branches
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/reduce_peaks.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     reduce_peaks
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/region_size.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     region_size
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/satn_to_seq.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     satn_to_seq
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/seq_to_satn.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     seq_to_satn
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/size_to_satn.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     size_to_satn
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/size_to_seq.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     size_to_seq
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/snow_partitioning.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     snow_partitioning
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/snow_partitioning_n.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     snow_partitioning_n
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/snow_partitioning_parallel.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     snow_partitioning_parallel
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/trim_disconnected_blobs.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     trim_disconnected_blobs
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/trim_extrema.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     trim_extrema
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/trim_floating_solid.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     trim_floating_solid
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/trim_nearby_peaks.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     trim_nearby_peaks
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/trim_nonpercolating_paths.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     trim_nonpercolating_paths
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/trim_saddle_points.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     trim_saddle_points
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../filters/reference/trim_small_clusters.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     trim_small_clusters
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/tutorials/computing_fractal_dim.html">
+   Measuring fractal dimension by box-counting
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/tutorials/lineal_path_function.html">
+   The lineal path function
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/tutorials/porosity_profiles.html">
+   Obtaining the porosity profile along each principle axis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/tutorials/regionprops_3d.html">
+   Using regionprops_3d to analyze properties of each pore
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/boxcount.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     boxcount
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/chord_counts.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     chord_counts
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/chord_length_distribution.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     chord_length_distribution
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/find_h.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     find_h
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/lineal_path_distribution.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     lineal_path_distribution
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/mesh__volume.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     mesh_volume
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/mesh_surface_area.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     mesh_surface_area
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/pc_curve.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     pc_curve
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/phase_fraction.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     phase_fraction
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/pore_size_distribution.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     pore_size_distribution
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/porosity.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     porosity
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/porosity_profile.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     porosity_profile
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/props_to_DataFrame.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     props_to_DataFrame
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/props_to_image.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     props_to_image
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/radial_density_distribution.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     radial_density_distribution
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/region_interface_areas.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     region_interface_areas
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/region_surface_areas.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     region_surface_areas
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/region_volumes.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     region_volumes
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/regionprops_3D.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     regionprops_3D
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/representative_elementary_volume.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     representative_elementary_volume
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/satn_profile.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     satn_profile
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../metrics/reference/two_point_correlation.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     two_point_correlation
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/tutorials/adding_boundary_pores.html">
+   Adding boundary pores
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/tutorials/snow_advanced.html">
+   SNOW network extraction (advanced)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/tutorials/snow_basic.html">
+   SNOW network extraction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/tutorials/using_diffusive_size_factor_AI_with_snow.html">
+   Using AI based diffusive size factors for extracted networks
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/reference/add_boundary_regions.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     add_boundary_regions
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/reference/diffusive_size_factor_AI.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     diffusive_size_factor_AI
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/reference/label_boundaries.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     label_boundaries
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/reference/label_phases.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     label_phases
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/reference/map_to_regions.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     map_to_regions
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/reference/regions_to_network.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     regions_to_network
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../networks/reference/snow2.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     snow2
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="drainage_with_gravity_advanced.html">
+   Details of Drainage Simulations with and without Gravity
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Basics of Peforming Drainage Simulations with and without Gravity
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="finding_tortuosity_from_image.html">
+   Finding the Tortuosity (
+   <span class="math notranslate nohighlight">
+    \(\tau\)
+   </span>
+   ) of an Image Using tortuosity_fd
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="using_ibip.html">
+   Image-based invasion percoalation
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/align_image_with_openpnm.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     align_image_with_openpnm
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/bbox_to_slices.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     bbox_to_slices
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/extend_slice.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     extend_slice
+    </span>
+   </code>
+   [WIP]
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/extract_cylinder.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     extract_cylinder
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/extract_regions.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     extract_regions
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/extract_subsection.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     extract_subsection
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/get_border.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     get_border
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/get_planes.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     get_planes
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/insert_cylinder.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     insert_cylinder
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/insert_sphere.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     insert_sphere
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/isolate_object.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     isolate_object
+    </span>
+   </code>
+   [WIP]
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/make_contiguous.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     make_contiguous
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/marching_map.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     marching_map
+    </span>
+   </code>
+   [WIP]
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/mesh_region.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     mesh_region
+    </span>
+   </code>
+   [WIP]
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/norm_to_uniform.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     norm_to_uniform
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/overlay.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     overlay
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/randomize_colors.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     randomize_colors
+    </span>
+   </code>
+   [WIP]
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/recombine.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     recombine
+    </span>
+   </code>
+   [WIP]
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/subdivide.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     subdivide
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tools/reference/unpad.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     unpad
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/tutorials/visualizing_tif_in_paraveiw.html">
+   Visualizing a tif image in Paraview
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/bar.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     bar
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/imshow.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     imshow
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/prep_for_imshow.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     prep_for_imshow
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/satn_to_movie.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     satn_to_movie
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/satn_to_panels.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     satn_to_panels
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/sem.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     sem
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/set_mpl_style.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     set_mpl_style
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/show_3D.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     show_3D
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/show_mesh.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     show_mesh
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/show_panels.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     show_panels
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/show_planes.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     show_planes
+    </span>
+   </code>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../visualization/reference/xray.html">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     xray
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+
+  </div>
+</nav>
+  </div>
+  <div class="sidebar-end-items">
+  </div>
+</div>
+
+
+          
+
+
+<div class="bd-sidebar-secondary d-none d-xl-block col-xl-2 bd-toc">
+  
+    
+    <div class="toc-item">
+      
+
+<nav id="bd-toc-nav">
+    
+</nav>
+    </div>
+    
+    <div class="toc-item">
+      
+    </div>
+    
+  
+</div>
+
+
+          
+          
+          <div class="bd-content col-12 col-md-9 col-xl-7">
+              
+              <article class="bd-article" role="main">
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="basics-of-peforming-drainage-simulations-with-and-without-gravity">
+<h1>Basics of Peforming Drainage Simulations with and without Gravity<a class="headerlink" href="#basics-of-peforming-drainage-simulations-with-and-without-gravity" title="Permalink to this heading">#</a></h1>
+<p>The PMEAL team recently developed a way to add gravitational effects to the standard drainage simulation algorithm based on sphere insertion, also sometimes called <em>morphological image opening</em> or <em>full morphology</em>. The paper is available in Water Resources Research. This post will give a brief overview of how to use this new algorithm, which is included in a new function called <code class="docutils literal notranslate"><span class="pre">drainage</span></code> located in the <code class="docutils literal notranslate"><span class="pre">porespy.filters</span></code> module.  The new <code class="docutils literal notranslate"><span class="pre">drainage</span></code> function can produce results with or without gravity effects, creating a more powerful yet flexible function for performing such simulations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">porespy</span> <span class="k">as</span> <span class="nn">ps</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">edt</span> <span class="kn">import</span> <span class="n">edt</span>
+<span class="n">ps</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">set_mpl_style</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Start by generating a 2D image of blobs:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">generators</span><span class="o">.</span><span class="n">blobs</span><span class="p">([</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span> <span class="n">porosity</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">blobiness</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ps</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/011a7b3a7740890acd130ba03251774c12b9a1700d8a0cde3a9419e7778d9604.png" src="../../../_images/011a7b3a7740890acd130ba03251774c12b9a1700d8a0cde3a9419e7778d9604.png" />
+</div>
+</div>
+<p>First we’ll compute a reference capillary pressure curve with no gravity effects using the new <code class="docutils literal notranslate"><span class="pre">drainage</span></code> function. This function requires us to supply an image of capillary pressure values associated with each voxel.  Typicall one would use the Washburn equation:</p>
+<div class="math notranslate nohighlight">
+\[ P_C = -2\sigma \cos (\theta) \bigg(\frac{1}{r}\bigg) \]</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">r</span></code> is conveniently provided by the distance transfer.  This can be computed as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">voxel_size</span> <span class="o">=</span> <span class="mf">1e-4</span>  <span class="c1"># m/voxel side, a large value is used illustrate the gravity effect</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="n">edt</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>  <span class="c1"># Obtain the distance transform, using the terrific edt package</span>
+<span class="n">pc</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="mf">0.072</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">180</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">dt</span><span class="o">*</span><span class="n">voxel_size</span><span class="p">)</span>  <span class="c1"># Apply Washburn equation</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The reason for requiring <code class="docutils literal notranslate"><span class="pre">pc</span></code> instead of just the boolean <code class="docutils literal notranslate"><span class="pre">im</span></code> is to allow users to compute the capillary pressure using any method they wish.  For instance a 2D image of a glass micromodel has a spacing between the plates which can be accounted for as:</p>
+<div class="math notranslate nohighlight">
+\[ P_C = -\sigma \cos (\theta) \bigg(\frac{1}{r} + \frac{1}{s}\bigg) \]</div>
+<p>Or <code class="docutils literal notranslate"><span class="pre">s</span></code> could be set to <code class="docutils literal notranslate"><span class="pre">np.inf</span></code> for a truly 2D simulation.  Computing <code class="docutils literal notranslate"><span class="pre">pc</span></code> externally also reduces the number of arguments that must be sent to the <code class="docutils literal notranslate"><span class="pre">drainage</span></code> function, by eliminating the surface tension and contact angle.</p>
+<p>In any event, the function is called as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inlets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
+<span class="n">inlets</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">drn</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">simulations</span><span class="o">.</span><span class="n">drainage</span><span class="p">(</span><span class="n">pc</span><span class="o">=</span><span class="n">pc</span><span class="p">,</span> <span class="n">im</span><span class="o">=</span><span class="n">im</span><span class="p">,</span> <span class="n">inlets</span><span class="o">=</span><span class="n">inlets</span><span class="p">,</span> <span class="n">voxel_size</span><span class="o">=</span><span class="n">voxel_size</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">14</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">drn</span><span class="o">.</span><span class="n">im_pc</span><span class="o">/</span><span class="n">im</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">drn</span><span class="o">.</span><span class="n">im_pc</span><span class="p">),</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "ab9a3a98f6cd4567b1fdedde0a74e4c0"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "38792f0934a74a2cb9e7dfcd0f14a287"}</script><img alt="../../../_images/630a19231aaad75083cce73863ec55f03610398bf4b9bb6ab25345265c2bf300.png" src="../../../_images/630a19231aaad75083cce73863ec55f03610398bf4b9bb6ab25345265c2bf300.png" />
+</div>
+</div>
+<p>Both of the above images are colored according to the capillary pressure at which a given voxel was invaded. In the right image we have applied a base-10 logarithm to the values to improve visibility.  The format is handy since it contains the entire invasion sequence in a single image.</p>
+<blockquote>
+<div><p>Note that we have divided the image of invasion pressures by <code class="docutils literal notranslate"><span class="pre">im</span></code> to trick matplotlib into showing the solid as white, since <code class="docutils literal notranslate"><span class="pre">value/False</span></code> returns <code class="docutils literal notranslate"><span class="pre">nan</span></code> while <code class="docutils literal notranslate"><span class="pre">value/True</span></code> leaves <code class="docutils literal notranslate"><span class="pre">value</span></code> untouched.</p>
+</div></blockquote>
+<p>Next let’s produce a capillary pressure curve.  There are some functions available in <code class="docutils literal notranslate"><span class="pre">porespy.metrics</span></code> for this, but the <code class="docutils literal notranslate"><span class="pre">drainage</span></code> function takes care of this for us and the needed values are attached to the returned object as attributes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">drn</span><span class="o">.</span><span class="n">pc</span><span class="p">,</span> <span class="n">drn</span><span class="o">.</span><span class="n">snwp</span><span class="p">,</span> <span class="s1">&#39;b-o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Capillary Pressure [Pa]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Non-wetting Phase Saturation&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/c74579abe5e66ecbfdcd9d5a00d5a01b81a38247775ddb1371d4a6cded416323.png" src="../../../_images/c74579abe5e66ecbfdcd9d5a00d5a01b81a38247775ddb1371d4a6cded416323.png" />
+</div>
+</div>
+<p>Now let’s perform the same experiment but including the gravity effects, by setting <code class="docutils literal notranslate"><span class="pre">g</span></code> to earth’s gravity:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drn2</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">simulations</span><span class="o">.</span><span class="n">drainage</span><span class="p">(</span><span class="n">pc</span><span class="o">=</span><span class="n">pc</span><span class="p">,</span> <span class="n">im</span><span class="o">=</span><span class="n">im</span><span class="p">,</span> <span class="n">inlets</span><span class="o">=</span><span class="n">inlets</span><span class="p">,</span> <span class="n">voxel_size</span><span class="o">=</span><span class="n">voxel_size</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">9.81</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">14</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">drn2</span><span class="o">.</span><span class="n">im_pc</span><span class="o">/</span><span class="n">im</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">drn2</span><span class="o">.</span><span class="n">im_pc</span><span class="p">),</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "79e7a1711f744fdd8a903ca23997d06a"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "d123d57294ee46128df2266901198e90"}</script><img alt="../../../_images/20938a945e59626be6154afb6af85ce67c9b683bc7459172b620346f4af41c1a.png" src="../../../_images/20938a945e59626be6154afb6af85ce67c9b683bc7459172b620346f4af41c1a.png" />
+</div>
+</div>
+<p>We can see from the colormap that the invasion pattern is different.  Plotting the capillary pressure curve will make the differences more obvious:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">drn2</span><span class="o">.</span><span class="n">pc</span><span class="p">,</span> <span class="n">drn2</span><span class="o">.</span><span class="n">snwp</span><span class="p">,</span> <span class="s1">&#39;r-o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Capillary Pressure [Pa]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Non-wetting Phase Saturation&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/69afff7ec79d58284e4cbc5f6c96107a4f8e1c2f99c55cdaa8e6e0f2da8fc91a.png" src="../../../_images/69afff7ec79d58284e4cbc5f6c96107a4f8e1c2f99c55cdaa8e6e0f2da8fc91a.png" />
+</div>
+</div>
+<p>Combining both plots together for a better comparison:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">drn</span><span class="o">.</span><span class="n">pc</span><span class="p">,</span> <span class="n">drn</span><span class="o">.</span><span class="n">snwp</span><span class="p">,</span> <span class="s1">&#39;b-o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">drn2</span><span class="o">.</span><span class="n">pc</span><span class="p">,</span> <span class="n">drn2</span><span class="o">.</span><span class="n">snwp</span><span class="p">,</span> <span class="s1">&#39;r-o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Capillary Pressure [Pa]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Non-wetting Phase Saturation&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/cc1d5ed2ca8b68fa34f83bc485cbe7f449fd26d65fbbe68abd91d9c289446472.png" src="../../../_images/cc1d5ed2ca8b68fa34f83bc485cbe7f449fd26d65fbbe68abd91d9c289446472.png" />
+</div>
+</div>
+<p>The red curve above is shifted to the right with a lower slope.  This is the expected result since the impact of gravity makes it more difficult for the heavy non-wetting fluid to rise up the domain and penetrate into pores. The decreased slope is also expected since pores are invaded more gradually rather than in a larger percolation event.</p>
+</section>
+
+
+              </article>
+              
+
+              
+          </div>
+          
+      </div>
+    </div>
+
+  
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695"></script>
+
+<footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    <p class="copyright">
+    &copy; Copyright 2023, PMEAL.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+  </div>
+  
+</div>
+</footer>
+  </body>
+</html>

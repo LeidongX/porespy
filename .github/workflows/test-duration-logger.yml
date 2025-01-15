@@ -5,7 +5,7 @@ on: [workflow_dispatch]
 jobs:
   build:
 
-    runs-on: ${{ matrix.operating-system }}
+    runs-on: ${{ matrix.os }}
     defaults:
       run:
         shell: bash -l {0}
@@ -13,51 +13,46 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        python-version: [3.8]
-        operating-system: [ubuntu-latest]
+        python-version: ['3.10']
+        os: [ubuntu-latest]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Cache pip
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           # This path is specific to Ubuntu
           path: ~/.cache/pip
           # Look to see if there is a cache hit for the corresponding requirements file
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements/min_requirements_pip.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('pyproject.toml') }}
           restore-keys: |
             ${{ runner.os }}-pip-
             ${{ runner.os }}-
 
       - name: Install dependencies (pip)
-        # TODO: once https://github.com/jerry-git/pytest-split/pull/10
-        #   is merged, fix the custom pip install for pytest-split.
         run: |
-          pip install wheel
-          pip install -r requirements/min_requirements_pip.txt
-          pip install git+https://github.com/ma-sadeghi/pytest-split.git@fix_ipynb_bug
-          # Install porespy from the checked-out branch
-          pip install -e . --no-deps
+          pip install -e .[test,extras]
 
-      - name: Running tests and examples
+      - name: Running unit tests and examples
         run: |
+          rm test/fixtures/.test_durations*
           pytest \
             --nbval-lax examples/ \
             --store-durations \
             --durations-path test/fixtures/.test_durations_examples
-          pytest \
+          pytest test/ \
             --store-durations \
-            --durations-path test/fixtures/.test_durations_unittests
+            --durations-path test/fixtures/.test_durations_unit
 
       - name: Committing test duration files
-        uses: EndBug/add-and-commit@v7
+        uses: EndBug/add-and-commit@v9
         with:
           add: 'test/fixtures'
           author_name: github-actions
-          author_email: 41898282+github-actions[bot]@users.noreply.github.com
+          author_email: actions@github.com
           message: 'Updated test duration files.'

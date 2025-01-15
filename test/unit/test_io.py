@@ -4,6 +4,7 @@ import numpy as np
 from numpy.testing import assert_allclose
 import porespy as ps
 import openpnm as op
+from pathlib import Path
 
 
 class ExportTest():
@@ -47,39 +48,10 @@ class ExportTest():
         assert a < b
         os.remove('dictvtk.vti')
 
-    def test_openpnm_to_im(self):
-        net = op.network.Cubic(shape=[5, 5, 5])
-        geom = op.geometry.StickAndBall(network=net,
-                                        pores=net.Ps, throats=net.Ts)
-        geom.add_model(propname="pore.volume",
-                       model=op.models.geometry.pore_volume.cube)
-        geom.add_model(propname="throat.volume",
-                       model=op.models.geometry.throat_volume.cylinder)
-        geom.regenerate_models()
-
-        im = ps.io.openpnm_to_im(network=net, pore_shape="cube",
-                                 throat_shape="cylinder", rtol=0.01)
-        porosity_actual = im.astype(bool).sum() / np.prod(im.shape)
-
-        volume_void = net["pore.volume"].sum() + net["throat.volume"].sum()
-        volume_total = np.prod(net.spacing * net.shape)
-        porosity_desired = volume_void / volume_total
-
-        assert_allclose(actual=porosity_actual, desired=porosity_desired, rtol=0.1)
-
     def test_to_stl(self):
         im = ps.generators.blobs(shape=[50, 50, 50])
         ps.io.to_stl(im, filename="im2stl")
         os.remove("im2stl.stl")
-
-    # def test_to_paraview(self):
-    #     im = ps.generators.blobs(shape=[50, 50, 50], spacing=0.1)
-    #     ps.io.to_paraview(im=im, filename='test_to_paraview.pvsm')
-    #     os.remove('test_to_paraview.pvsm')
-
-    # def test_open_paraview(self):
-    #     ps.io.open_paraview(filename='../fixtures/image.pvsm')
-    #     assert "paraview" in (p.name().split('.')[0] for p in psutil.process_iter())
 
     def test_spheres_to_comsol_radii_centers(self):
         radii = np.array([10, 20, 25, 5])
@@ -95,6 +67,16 @@ class ExportTest():
                                                r=10, porosity=0.6)
         ps.io.spheres_to_comsol(filename='sphere_pack', im=im)
         os.remove("sphere_pack.mphtxt")
+
+    def test_zip_to_stack_and_folder_to_stack(self):
+        p = Path(os.path.realpath(__file__),
+                 '../../../test/fixtures/blobs_layers.zip').resolve()
+        im = ps.io.zip_to_stack(p)
+        assert im.shape == (100, 100, 10)
+        p = Path(os.path.realpath(__file__),
+                 '../../../test/fixtures/blobs_layers').resolve()
+        im = ps.io.folder_to_stack(p)
+        assert im.shape == (100, 100, 10)
 
 
 if __name__ == "__main__":

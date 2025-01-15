@@ -40,10 +40,12 @@ help:
 	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
 
 clean:
-	-rm -rf $(BUILDDIR)/*
+	rm -rf $(BUILDDIR)/
+	rm -rf examples/
+	find . -name "generated" | xargs rm -rf
 
 html:
-	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
+	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html -j auto
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 

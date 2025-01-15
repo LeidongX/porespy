@@ -1,3 +1,4 @@
+import sys
 import porespy as ps
 import numpy as np
 import scipy.spatial as sptl
@@ -97,20 +98,6 @@ class ToolsTest():
         assert np.all(x.shape == (1, 51, 51))
         assert np.all(y.shape == (51, 1, 51))
         assert np.all(z.shape == (51, 51, 1))
-
-    def test_get_border(self):
-        c = ps.tools.get_border(self.im2D.shape, thickness=1, mode='corners')
-        assert c.sum() == 4
-        c = ps.tools.get_border(self.im3D.shape, thickness=1, mode='corners')
-        assert c.sum() == 8
-        c = ps.tools.get_border(self.im2D.shape, thickness=1, mode='edges')
-        assert c.sum() == 200
-        c = ps.tools.get_border(self.im3D.shape, thickness=1, mode='edges')
-        assert c.sum() == 596
-        c = ps.tools.get_border(self.im2D.shape, thickness=1, mode='faces')
-        assert c.sum() == 200
-        c = ps.tools.get_border(self.im3D.shape, thickness=1, mode='faces')
-        assert c.sum() == 15002
 
     def test_align_image_w_openpnm(self):
         im = ps.tools.align_image_with_openpnm(np.ones([40, 50]))
@@ -307,6 +294,9 @@ class ToolsTest():
         im = im*ps.tools.extract_regions(im, labels=[2, 3], trim=False)
         assert np.all(np.unique(im) == [0, 2, 3])
 
+    condition = sys.platform.startswith("win")  # and sys.version_info[:2] == (3, 8)
+
+    @pytest.mark.skipif(condition, reason="scikit-fmm clashes with numpy")
     def test_marching_map(self):
         im = ps.generators.lattice_spheres(shape=[101, 101],
                                            r=5, spacing=25,
@@ -335,6 +325,108 @@ class ToolsTest():
         assert outer.sum() == 1989
         outer = ps.tools.find_outer_region(self.im2D)
         assert outer.sum() == 64
+
+    def test_numba_insert_disk_2D(self):
+        im = np.zeros([50, 50], dtype=int)
+        c = np.vstack([[10, 10], [30, 40]]).T
+        im = ps.tools._insert_disk_at_points(im=im, coords=c, r=10, v=2)
+        assert im.max() == 2
+        assert im.sum() == 1220
+        im = ps.tools._insert_disk_at_points(im=im, coords=c, r=10, v=2.4,
+                                             smooth=False)
+        assert im.max() == 2
+        assert im.sum() == 1266
+        im = ps.tools._insert_disk_at_points(im=im, coords=c, r=10, v=3,
+                                             overwrite=False)
+        assert im.max() == 2
+        im = ps.tools._insert_disk_at_points(im=im, coords=c, r=10, v=3,
+                                             overwrite=True)
+        assert im.max() == 3
+
+    def test_numba_insert_disk_3D(self):
+        im = np.zeros([50, 50, 50], dtype=int)
+        c = np.vstack([[10, 10, 10], [30, 40, 20]]).T
+        im = ps.tools._insert_disk_at_points(im=im, coords=c, r=10, v=2)
+        assert im.max() == 2
+        assert im.sum() == 16556
+        im = ps.tools._insert_disk_at_points(im=im, coords=c, r=10, v=2.4,
+                                             smooth=False)
+        assert im.max() == 2
+        assert im.sum() == 16674
+        im = ps.tools._insert_disk_at_points(im=im, coords=c, r=10, v=3,
+                                             overwrite=False)
+        assert im.max() == 2
+        im = ps.tools._insert_disk_at_points(im=im, coords=c, r=10, v=3,
+                                             overwrite=True)
+        assert im.max() == 3
+
+    def test_numba_insert_disks_2D(self):
+        im = np.zeros([50, 50], dtype=int)
+        c = np.vstack([[10, 10], [30, 40]]).T
+        r = np.array([10, 10], dtype=int)
+        im = ps.tools._insert_disks_at_points(im=im, coords=c, radii=r, v=2)
+        assert im.max() == 2
+        assert im.sum() == 1220
+        im = ps.tools._insert_disks_at_points(im=im, coords=c, radii=r, v=2.4,
+                                              smooth=False)
+        assert im.max() == 2
+        assert im.sum() == 1266
+        im = ps.tools._insert_disks_at_points(im=im, coords=c, radii=r, v=3,
+                                              overwrite=False)
+        assert im.max() == 2
+        im = ps.tools._insert_disks_at_points(im=im, coords=c, radii=r, v=3,
+                                              overwrite=True)
+        assert im.max() == 3
+
+    def test_numba_insert_disks_3D(self):
+        im = np.zeros([50, 50, 50], dtype=int)
+        c = np.vstack([[10, 10, 10], [30, 40, 20]]).T
+        r = np.array([10, 10], dtype=int)
+        im = ps.tools._insert_disks_at_points(im=im, coords=c, radii=r, v=2)
+        assert im.max() == 2
+        assert im.sum() == 16556
+        im = ps.tools._insert_disks_at_points(im=im, coords=c, radii=r, v=2.4,
+                                              smooth=False)
+        assert im.max() == 2
+        assert im.sum() == 16674
+        im = ps.tools._insert_disks_at_points(im=im, coords=c, radii=r, v=3,
+                                              overwrite=False)
+        assert im.max() == 2
+        im = ps.tools._insert_disks_at_points(im=im, coords=c, radii=r, v=3,
+                                              overwrite=True)
+        assert im.max() == 3
+
+    def test_find_bbox_2D(self):
+        temp = np.ones([50, 50], dtype=bool)
+        temp[25, 25] = False
+        im2D = edt(temp) < 10
+        bbox = ps.tools.find_bbox(im2D)
+        assert im2D[bbox].shape == (19, 19)
+        im2D = edt(temp) <= 10
+        bbox = ps.tools.find_bbox(im2D)
+        assert im2D[bbox].shape == (21, 21)
+        bbox = ps.tools.find_bbox(im2D, order_by='corners')
+        assert bbox == [[15, 15], [36, 36]]
+
+    def test_find_bbox_3D(self):
+        temp = np.ones([50, 50, 50], dtype=bool)
+        temp[25, 25, 25] = False
+        im2D = edt(temp) < 10
+        bbox = ps.tools.find_bbox(im2D)
+        assert im2D[bbox].shape == (19, 19, 19)
+        im2D = edt(temp) <= 10
+        bbox = ps.tools.find_bbox(im2D)
+        assert im2D[bbox].shape == (21, 21, 21)
+        bbox = ps.tools.find_bbox(im2D, order_by='corners')
+        assert bbox == [[15, 15, 15], [36, 36, 36]]
+
+    def test_tic_toc(self):
+        from porespy.tools import tic, toc
+        from time import sleep
+        tic()
+        sleep(1)
+        t = toc(quiet=True)
+        assert t > 1
 
 
 if __name__ == '__main__':

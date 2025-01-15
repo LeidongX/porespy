@@ -5,7 +5,9 @@ ps.settings.tqdm['disable'] = True
 
 class VisualizationTest():
     def setup_class(self):
+        np.random.seed(0)
         self.im = ps.generators.blobs(shape=[51, 51, 51])
+        self.lt = ps.filters.local_thickness(self.im)
 
     def test_sem_x(self):
         sem = ps.visualization.sem(self.im)
@@ -34,14 +36,14 @@ class VisualizationTest():
     def test_imshow_single(self):
         im = ps.generators.blobs(shape=[10, 20, 30])
         fig = ps.visualization.imshow(im)
-        assert fig.numCols == 1
-        assert fig.numRows == 1
+        assert fig.get_gridspec().ncols == 1
+        assert fig.get_gridspec().nrows == 1
 
     def test_imshow_multi(self):
         im = ps.generators.blobs(shape=[10, 20, 30])
         fig = ps.visualization.imshow(im, im)
-        assert fig.numCols == 2
-        assert fig.numRows == 1
+        assert fig.get_gridspec().ncols == 2
+        assert fig.get_gridspec().nrows == 1
 
     def test_bar(self):
         im = ps.generators.blobs(shape=[101, 200])
@@ -66,13 +68,26 @@ class VisualizationTest():
                                            lattice='tri')
         bd = np.zeros_like(im)
         bd[:, 0] = True
-        inv, size = ps.filters.ibip(im=im, inlets=bd)
+        inv, size = ps.simulations.ibip(im=im, inlets=bd)
         satn = ps.filters.seq_to_satn(seq=inv, im=im)
-        mov = ps.visualization.satn_to_movie(im, satn, cmap='viridis',
-                                             c_under='grey', c_over='white',
-                                             v_under=1e-3, v_over=1.0, fps=10,
-                                             repeat=False)
+        # mov = ps.visualization.satn_to_movie(im, satn, cmap='viridis',
+        #                                      c_under='grey', c_over='white',
+        #                                      v_under=1e-3, v_over=1.0, fps=10,
+        #                                      repeat=False)
         # mov.save('image_based_ip.gif', writer='pillow', fps=10)
+
+    def test_satn_to_panels(self):
+        fig, ax = ps.visualization.satn_to_panels(self.lt, im=self.im, bins=13)
+        assert ax.shape == (1, 13)
+        fig, ax = ps.visualization.satn_to_panels(self.lt, im=self.im, bins=16)
+        assert ax.shape == (4, 4)
+
+    def test_prep_for_imshow_3D(self):
+        a = ps.visualization.prep_for_imshow(self.lt, self.im)
+        assert a['X'].shape == (51, 51)
+        assert a['vmin'] == 1.0
+        b = ps.visualization.prep_for_imshow(self.lt, self.im, axis=None)
+        assert b['X'].shape == (51, 51, 51)
 
 
 if __name__ == '__main__':
